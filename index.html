@@ -145,24 +145,53 @@ button{background:#2fa4ff;box-shadow:none;border-radius:8px;font-family:Nunito,s
 .circ{width:64px;height:64px;border-radius:50%;background:#2a1626;border:2px solid var(--pink);display:grid;place-items:center;flex:none}
 .circ svg{width:30px;height:30px;shape-rendering:crispEdges}
 .lg2{width:min(260px,40vw);image-rendering:pixelated;filter:drop-shadow(0 6px 0 #0006)}
-.wb{max-width:1180px;margin:0 20px 32px;display:flex;align-items:stretch;background:#242424;border-radius:10px;overflow:hidden;min-height:112px}
-@media (min-width:1220px){.wb{margin:0 auto 32px}}
-.wl{flex:1;display:flex;align-items:center;gap:14px;padding:0 28px}.wl img{width:48px;image-rendering:pixelated}
-.wl b{display:block;font-size:24px;font-weight:800}.wl span{color:var(--pink);font-weight:800;font-size:20px}
-.seg{margin:0;border:0;border-radius:0;font-size:13px;color:#fff;line-height:1.3;display:flex;align-items:center;gap:12px}
-.bk{background:#2fa4ff;clip-path:polygon(14% 0,100% 0,86% 100%,0 100%);padding:0 74px;text-align:center;justify-content:center}
-.lg{background:var(--pink);color:#2b0a22;margin-left:-38px;clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);padding:0 16px 0 68px;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:12px;overflow:hidden;position:relative;cursor:pointer;transition:filter .15s ease}.lg:hover{filter:brightness(1.05)}#lgt{display:inline-block;line-height:1.25;font-size:13px;font-weight:800;text-align:right;z-index:2;color:#2b0a22}#lgt b{display:block;font-size:17px;font-weight:900;letter-spacing:0.5px}
-.seg b{font-size:15px}
-.sk{display:flex;align-items:flex-start;justify-content:center;width:76px;height:112px;overflow:hidden;flex:none;align-self:stretch;position:relative;pointer-events:none}.sk img,.sk svg{width:68px;height:auto;max-width:none;display:block;image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.3));margin-top:4px;transition:transform .25s ease}.lg:hover .sk img,.lg:hover .sk svg{transform:translateY(-2px) scale(1.04)}
-.tiles{max-width:1220px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.wb{max-width:1220px;margin:0 auto 32px;display:flex;align-items:stretch;background:#242424;border-radius:12px;overflow:hidden;min-height:104px;box-shadow:0 8px 24px rgba(0,0,0,0.35)}
+.wl{flex:1 1 auto;display:flex;align-items:center;gap:14px;padding:16px 24px;min-width:200px}.wl img{width:48px;height:48px;image-rendering:pixelated;object-fit:contain}
+.wl b{display:block;font-size:22px;font-weight:800;line-height:1.2;color:#fff}.wl span{color:var(--pink);font-weight:800;font-size:18px}
+.seg{margin:0;border:0;border-radius:0;font-size:13px;color:#fff;line-height:1.3;display:flex;align-items:center;cursor:pointer;transition:filter .15s}
+.bk{flex:0 0 auto;background:#2fa4ff;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);padding:0 36px 0 44px;text-align:center;justify-content:center;white-space:nowrap;font-weight:700}
+.bk b{font-size:15px;font-weight:900;margin-left:4px}
+.bk:hover{filter:brightness(1.08)}
+.lg{flex:0 0 auto;background:var(--pink);color:#2b0a22;margin-left:-22px;clip-path:polygon(10% 0,100% 0,100% 100%,0 100%);padding:0 16px 0 34px;min-width:210px;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:12px;position:relative;overflow:hidden;cursor:pointer;transition:filter .15s}
+.lg:hover{filter:brightness(1.05)}
+#lgt{display:inline-block;line-height:1.25;font-size:13px;font-weight:700;text-align:right;z-index:2;color:#2b0a22;white-space:nowrap}
+#lgt b{display:block;font-size:17px;font-weight:900;letter-spacing:0.5px;color:#180315}
+.sk{display:flex;align-items:flex-end;justify-content:center;width:66px;height:104px;overflow:hidden;flex:none;align-self:stretch;position:relative;pointer-events:none}
+.sk img,.sk svg{width:60px;height:auto;max-width:none;display:block;image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.28));margin-bottom:0;transition:transform .2s ease}
+.lg:hover .sk img,.lg:hover .sk svg{transform:translateY(-2px) scale(1.04)}
+
+.tiles{max-width:1220px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .tiles[hidden]{display:none}
-.tile{display:flex;justify-content:space-between;align-items:center;text-align:left;margin:0;padding:34px 36px;min-height:220px;background:var(--pink);color:#2b0a22;border:2px solid #ffd1ea;border-radius:12px;transition:transform .15s}
-.tile:hover{transform:translateY(-3px)}
-.tile h2{font-size:36px;margin:0 0 6px;color:#2b0a22}
-.tile span{display:block;font-size:22px;font-weight:800;color:#fff}
-.ti{display:flex;gap:4px}.ti svg{width:130px;height:130px;shape-rendering:crispEdges}
-#ti3 svg{width:52px;height:52px}
-@media (max-width:700px){.tiles{grid-template-columns:1fr}.hero2{grid-template-columns:1fr;justify-items:center;text-align:center}.hr{justify-content:center;text-align:center}.lg2{order:-1}.wb{flex-wrap:wrap}.wl{flex-basis:100%;padding:16px}.seg{flex:1;padding:14px;clip-path:none;margin:0;justify-content:center;text-align:center}.lg{padding:10px 16px!important;clip-path:none!important;margin:0!important;min-height:84px}.sk{height:84px;width:58px}.sk img,.sk svg{width:50px;margin-top:2px}}
+.tile{display:flex;justify-content:space-between;align-items:center;text-align:left;margin:0;padding:26px 32px;min-height:180px;background:var(--pink);color:#2b0a22;border:2px solid #ffd1ea;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.25);transition:transform .2s ease,box-shadow .2s ease;overflow:hidden;position:relative;cursor:pointer}
+.tile:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,0.4)}
+.tile>div:first-child{flex:1 1 auto;min-width:0;padding-right:12px}
+.tile h2{font-size:32px;margin:0 0 6px;color:#2b0a22;font-weight:900;letter-spacing:1px}
+.tile span{display:block;font-size:18px;font-weight:800;color:#5a1a45;white-space:nowrap}
+.ti{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex:0 0 auto}
+.ti svg{width:88px;height:88px;shape-rendering:crispEdges;display:block}
+#ti3{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex:0 0 auto}
+#ti3 svg{width:38px !important;height:48px !important;display:block}
+#ti4{display:flex;align-items:center;justify-content:flex-end}
+
+@media (max-width:860px){
+  .tiles{grid-template-columns:1fr;gap:14px}
+  .tile{padding:20px 24px;min-height:150px}
+  .tile h2{font-size:26px}
+  .tile span{font-size:16px}
+  .ti svg{width:72px;height:72px}
+  #ti3 svg{width:32px !important;height:42px !important}
+}
+@media (max-width:700px){
+  .hero2{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .hr{justify-content:center;text-align:center}
+  .lg2{order:-1}
+  .wb{flex-direction:column;border-radius:10px}
+  .wl{flex-basis:auto;padding:16px;justify-content:center;text-align:center}
+  .seg{width:100%;clip-path:none !important;margin:0 !important;padding:14px 20px !important;justify-content:center;text-align:center}
+  .lg{justify-content:center;padding:12px 20px !important}
+  .sk{height:76px;width:52px}
+  .sk img,.sk svg{width:46px}
+}
 .cat{display:none}.cat.on{display:block}
 .back{background:none;box-shadow:none;color:var(--pink);font-size:16px;padding:0 0 14px;margin:0;text-decoration:underline}
 section>h2{font-size:30px;color:#fff}
@@ -265,48 +294,6 @@ button{transition:transform .1s,background .15s}
 .seg{transition:background .2s}
 .seg:hover{filter:brightness(1.1)}
 
-
-/* ===== Payment Screenshot Dropzone & Modal Styles ===== */
-.ss-wrap{margin:14px 0 12px;text-align:left}
-.ss-label{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;color:#fff;margin-bottom:6px}
-.ss-badge{background:var(--hot);color:#fff;font-size:10px;padding:2px 7px;border-radius:4px;letter-spacing:0.5px}
-.ss-dropzone{border:2px dashed var(--line);border-radius:10px;background:#180517;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s ease;outline:none}
-.ss-dropzone:hover,.ss-dropzone:focus-visible{border-color:var(--pink);background:#220820}
-.ss-dropzone.dragover{border-color:#3ddc6b;background:#0d2314;box-shadow:0 0 14px rgba(61,220,107,0.35)}
-.ss-dropzone.has-file{border-style:solid;border-color:var(--line);background:#1c041b;padding:10px}
-.ss-idle-icon{width:40px;height:40px;margin:0 auto 6px;color:var(--pink);opacity:.9;display:flex;align-items:center;justify-content:center}
-.ss-idle-icon svg{width:34px;height:34px;shape-rendering:geometricPrecision}
-.ss-idle-txt{font-size:13px;color:#fff;font-weight:700}
-.ss-idle-txt span{color:var(--pink);text-decoration:underline}
-.ss-idle-sub{font-size:11px;color:var(--mute);margin-top:3px}
-.ss-preview{display:flex;align-items:center;gap:12px;text-align:left}
-.ss-thumb-wrap{width:64px;height:64px;border-radius:6px;overflow:hidden;border:2px solid var(--line);background:#0a0a0a;flex:none}
-.ss-thumb{width:100%;height:100%;object-fit:cover;display:block}
-.ss-meta{flex:1;min-width:0}
-.ss-name{font-size:13px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-.ss-size{font-size:11px;color:var(--mute);display:block;margin-top:2px}
-.ss-ok{color:#3ddc6b;font-size:11px;font-weight:800;display:inline-flex;align-items:center;gap:4px;margin-top:3px}
-.ss-actions{display:flex;gap:6px;flex:none}
-.ss-btn-del{background:#331414;color:#ff8585;border:1px solid #772222;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit}
-.ss-btn-del:hover{background:#551818;color:#fff}
-.ss-help-msg{font-size:11px;color:#ffd83a;margin-top:6px;line-height:1.4}
-#btn-paid:disabled,button:disabled{opacity:.45!important;cursor:not-allowed!important;filter:grayscale(.6);transform:none!important}
-.ss-modal-ov{position:fixed;inset:0;background:#000d;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
-.ss-modal-ov.on{display:flex}
-.ss-modal-box{background:var(--panel);border:3px solid var(--line);border-radius:12px;padding:16px;max-width:92vw;max-height:92vh;display:flex;flex-direction:column;gap:10px}
-.ss-modal-box img{max-width:100%;max-height:75vh;object-fit:contain;border-radius:6px;border:1px solid #000}
-
-
-/* Receipt Modal Styles */
-#receipt-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:9999;align-items:center;justify-content:center;padding:16px;}
-#receipt-modal.on{display:flex!important;}
-.rm-card{background:var(--panel,#180318);border:2px solid var(--pink,#ff4da6);border-radius:12px;max-width:580px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.8);overflow:hidden;}
-.rm-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:2px solid var(--line,#3a0f35);background:#220522;}
-.rm-body{padding:18px 20px;overflow-y:auto;flex:1;}
-.rm-foot{padding:14px 20px;border-top:2px solid var(--line,#3a0f35);display:flex;gap:10px;justify-content:flex-end;background:#180318;flex-wrap:wrap;}
-.btn-view-receipt{background:#5865f2!important;color:#fff!important;border-color:#5865f2!important;}
-.btn-view-receipt:hover{background:#4752c4!important;}
-
 </style>
 </head>
 <body>
@@ -319,7 +306,7 @@ button{transition:transform .1s,background .15s}
 <div class="wb"><div class="wl"><img src="data:image/png;base64,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" alt=""><div><b>LycheeMC</b><span>Welcome to our store!</span></div></div>
 <button class="seg bk" id="bk2">Check your new<br><b>BASKET (<span id="bkn">0</span>)</b></button>
 <button class="seg lg" id="lg"><span id="lgt"></span><span class="sk" id="lgs"></span></button></div>
-<div class="tiles" id="cats" style="grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));">
+<div class="tiles" id="cats">
 <button class="tile" data-c="sabers" style="background:linear-gradient(135deg, #3d0733, #1c041b);border-color:#ff3a3a;color:#fff;"><div><h2 style="color:#ff3a3a;">SABERS</h2><span style="color:#ffd83a;">★ God Weapons</span></div><div class="ti" id="ti4"></div></button>
 <button class="tile" data-c="shards"><div><h2>SHARDS</h2><span>Click to view</span></div><div class="ti" id="ti1"></div></button>
 <button class="tile" data-c="ranks"><div><h2>RANKS</h2><span>Click to view</span></div><div class="ti" id="ti2"></div></button>
@@ -487,54 +474,8 @@ button{transition:transform .1s,background .15s}
 </div>
 <div class="ov" id="co"><div class="dlg">
 <div id="s1"><h2>Checkout details</h2><form id="f"><label>Email<input type="email" name="email" required autocomplete="email"></label><label>Your Minecraft username<input name="user" required pattern="[A-Za-z0-9_. ]{3,20}" title="3 to 20 letters, numbers, spaces, dots or underscores"></label><label>Edition<select name="ed"><option>Java</option><option>Bedrock</option></select></label><label><input type="checkbox" id="gf" name="gift">Buy as a gift for another player</label><div id="gb" hidden><label>Recipient Minecraft username<input name="to" pattern="[A-Za-z0-9_. ]{3,20}"></label><label>Gift message (optional)<input name="gm" maxlength="80"></label></div><label>Discord username (optional)<input name="dc"></label><label><input type="checkbox" required>I agree to the <a href="#tos" class="cl">Terms</a> and <a href="#refunds" class="cl">Refund Policy</a></label><div class="row"><button>Continue to payment</button><button type="button" class="x" id="cc">Cancel</button></div></form></div>
-<div id="s2" hidden><h2>Pay with UPI</h2><p>Scan with any UPI app and pay <b id="amt"></b>. This QR doesn't fill in the amount, so enter it yourself. Order ID: <b id="oid"></b></p><img class="qr" src="data:image/png;base64,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" alt="UPI payment QR code"><form id="pf">
-  <div class="ss-wrap">
-    <div class="ss-label">
-      <span>Payment Screenshot <span class="ss-badge">REQUIRED</span></span>
-      <span id="ss-status-badge" style="font-size:11px;color:#ff8585;font-weight:700;">Screenshot Missing</span>
-    </div>
-    <div class="ss-dropzone" id="ss-dropzone" tabindex="0" role="button" aria-label="Attach payment screenshot">
-      <input type="file" id="ss-file-input" accept="image/png,image/jpeg,image/webp,image/jpg" style="display:none;">
-      <div id="ss-idle">
-        <div class="ss-idle-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <div class="ss-idle-txt"><span>Click to browse</span> or drag & drop screenshot</div>
-        <div class="ss-idle-sub">Supports PNG, JPG, WEBP · or paste screenshot (Ctrl+V)</div>
-      </div>
-      <div id="ss-preview" class="ss-preview" style="display:none;">
-        <div class="ss-thumb-wrap">
-          <img id="ss-thumb" class="ss-thumb" alt="Payment proof">
-        </div>
-        <div class="ss-meta">
-          <span class="ss-name" id="ss-name">screenshot.png</span>
-          <span class="ss-size" id="ss-size">0 KB</span>
-          <span class="ss-ok">✓ Screenshot attached</span>
-        </div>
-        <div class="ss-actions">
-          <button type="button" class="ss-btn-del" id="ss-remove" title="Remove screenshot">✕ Remove</button>
-        </div>
-      </div>
-    </div>
-    <p id="ss-hint" class="ss-help-msg">⚠️ You must attach a screenshot of your successful UPI payment to enable the "I've paid" button.</p>
-  </div>
-  <label>UTR or transaction ID
-    <input name="utr" id="utr-input" required minlength="8" autocomplete="off" placeholder="Enter 12-digit UPI / Bank reference number">
-  </label>
-  <div class="row">
-    <button id="btn-paid" disabled title="Upload payment screenshot to unlock">I've paid</button>
-    <button type="button" class="x" id="bk">Back</button>
-  </div>
-</form></div>
-<div id="s3" hidden><h2>Order placed</h2><p>We check your payment and then deliver to your username. Copy the whole message, including the last line, and send it to staff on Discord.</p><div class="sum" id="sum"></div>
-<div id="s3-ss-box" style="display:none;background:#180517;border:2px solid var(--line);border-radius:8px;padding:12px;margin:10px 0;text-align:left;">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-    <b style="color:var(--pink);font-size:12px;">📸 Attached Payment Screenshot Proof:</b>
-    <button type="button" class="cpb" id="s3-ss-view">🔍 View Full</button>
-  </div>
-  <img id="s3-ss-img" style="max-height:140px;max-width:100%;border-radius:6px;border:1px solid #333;display:block;cursor:pointer;" alt="Attached Screenshot">
-</div>
-<div class="row"><button id="cp">Copy summary</button><button id="dd">Open Discord</button><button class="x" id="fin">Done</button><button class="x" id="cn2">Cancel order</button></div></div>
+<div id="s2" hidden><h2>Pay with UPI</h2><p>Scan with any UPI app and pay <b id="amt"></b>. This QR doesn't fill in the amount, so enter it yourself. Order ID: <b id="oid"></b></p><img class="qr" src="data:image/png;base64,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" alt="UPI payment QR code"><form id="pf"><label>UTR or transaction ID<input name="utr" required minlength="8" autocomplete="off"></label><div class="row"><button>I've paid</button><button type="button" class="x" id="bk">Back</button></div></form></div>
+<div id="s3" hidden><h2>Order placed</h2><p>We check your payment and then deliver to your username. Copy the whole message, including the last line, and send it to staff on Discord.</p><div class="sum" id="sum"></div><div class="row"><button id="cp">Copy summary</button><button id="dd">Open Discord</button><button class="x" id="fin">Done</button><button class="x" id="cn2">Cancel order</button></div></div>
 <div id="s4" hidden><h2>Cancel an order</h2><p>You can cancel an order before it is delivered. Enter your order ID and email, then send the message to staff on Discord.</p><form id="cf"><label>Order ID<input name="ref" required placeholder="LMC-XXXXXX"></label><label>Email used at checkout<input type="email" name="email" required></label><label>Reason (optional)<input name="why" maxlength="100"></label><div class="row"><button>Create cancel request</button><button type="button" class="x" id="cb2">Close</button></div></form><div class="sum" id="cs" hidden></div><div class="row" id="cr" hidden><button id="cpc">Copy message</button><button id="cdd">Open Discord</button></div></div>
 <div id="s5" hidden><h2>Log in</h2><p>Enter your Minecraft username. If it is a premium account, your skin is shown in the store.</p><form id="lf"><label>Minecraft username<input name="u" required pattern="[A-Za-z0-9_.]{3,20}" title="3 to 20 letters, numbers, dots or underscores" autocomplete="off"></label><div class="row"><button>Log in</button><button type="button" class="x" id="lc">Cancel</button></div></form><p id="lm"></p></div>
 </div></div>
@@ -635,7 +576,6 @@ function getInitialSampleOrders(){
   return {
     'LMC-P8291A': {
       id: 'LMC-P8291A',
-      token: 'TKN-8291',
       t: now - 1000 * 60 * 25,
       email: 'alex_miner@gmail.com',
       user: 'AlexMiner',
@@ -647,8 +587,6 @@ function getInitialSampleOrders(){
       items: [{n: 'Titan Rank', q: 1, p: '₹200'}],
       total: 200,
       utr: 'UPI20261025001',
-      ss: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='500' viewBox='0 0 400 500'><rect width='100%' height='100%' fill='%231a1a2e'/><circle cx='200' cy='100' r='45' fill='%2310b981'/><path d='M180 100 l15 15 l30 -30' stroke='white' stroke-width='6' fill='none' stroke-linecap='round'/><text x='200' y='175' fill='%23ffffff' font-size='20' font-weight='bold' font-family='sans-serif' text-anchor='middle'>Payment Successful</text><text x='200' y='215' fill='%2310b981' font-size='28' font-weight='bold' font-family='sans-serif' text-anchor='middle'>%E2%82%B9200.00</text><text x='200' y='250' fill='%23aaaaaa' font-size='13' font-family='sans-serif' text-anchor='middle'>Paid to: LycheeMC Store</text><rect x='30' y='280' width='340' height='150' rx='8' fill='%2316213e' stroke='%230f3460'/><text x='50' y='315' fill='%23888888' font-size='12' font-family='sans-serif'>Transaction ID / UTR:</text><text x='50' y='340' fill='%2300fff5' font-size='14' font-weight='bold' font-family='monospace'>UPI20261025001</text><text x='50' y='380' fill='%23888888' font-size='12' font-family='sans-serif'>Order Reference:</text><text x='50' y='405' fill='%23ffffff' font-size='14' font-weight='bold' font-family='monospace'>LMC-P8291A</text><text x='200' y='475' fill='%23666666' font-size='11' font-family='sans-serif' text-anchor='middle'>UPI Verified Proof</text></svg>",
-      ssName: 'gpay_receipt_proof.png',
       status: 'pending',
       history: [
         {t: now - 1000 * 60 * 25, s: 'pending', note: 'Order placed by customer'}
@@ -825,81 +763,34 @@ function render(){
     const dateStr = esc(new Date(o.t || Date.now()).toLocaleString());
     const itemsText = (o.items || []).map(i => esc(i.n) + ' × ' + (+i.q || 1) + (i.p ? ' (' + esc(i.p) + ')' : '')).join(', ');
 
-    const tokenDisplay = o.token || ('TKN-' + id.replace('LMC-', ''));
     return `
-      <div class="ord" data-order-id="${id}" style="border:2px solid var(--line);border-radius:10px;padding:16px;background:var(--panel,#180318);margin-bottom:16px;">
-        <div class="top" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:12px;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <span style="background:rgba(255,105,180,0.18);border:1.5px solid var(--pink);color:var(--pink);padding:4px 10px;border-radius:6px;font-size:15px;font-weight:900;letter-spacing:1px;">
-              Order #${id}
-            </span>
-            <span style="background:#26132b;border:1px solid #7a2a5a;color:#ffd83a;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:700;">
-              🎟 Token: ${esc(tokenDisplay)}
-            </span>
-            <span style="color:var(--mute);font-size:12px;">${dateStr}</span>
+      <div class="ord" data-order-id="${id}">
+        <div class="top">
+          <div>
+            <b style="font-size:16px;letter-spacing:1px;color:#fff;">${id}</b>
+            <span style="color:var(--mute);font-size:12px;margin-left:10px;">${dateStr}</span>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="pill ${statusClass}">${statusLabel}</span>
-            <button type="button" class="cpb btn-view-receipt" onclick="window.viewOrderReceipt('${id}')" style="background:#5865f2;color:#fff;border-color:#5865f2;font-size:12px;padding:5px 12px;font-weight:700;border-radius:6px;cursor:pointer;">
-              📄 View Receipt
-            </button>
-          </div>
+          <span class="pill ${statusClass}">${statusLabel}</span>
         </div>
-
-        <p style="margin:8px 0 6px;line-height:1.6;">
-          <b>Customer:</b> <span style="color:#fff;font-weight:700;">${esc(o.user)}</span> <span style="background:#1c041b;padding:2px 6px;border-radius:4px;border:1px solid var(--line);font-size:11px;">${esc(o.ed||'Java')}</span>
-          ${o.gift ? ` · <b>Deliver to:</b> <span style="color:var(--pink);font-weight:700;">${esc(o.to)}</span> (Gift${o.gm ? ': "' + esc(o.gm) + '"' : ''})` : ''}
+        <p style="margin:10px 0 6px;">
+          <b>Customer:</b> ${esc(o.user)} <span style="background:#1c041b;padding:2px 6px;border-radius:4px;border:1px solid var(--line);font-size:11px;">${esc(o.ed||'Java')}</span>
+          ${o.gift ? ` · <b>Deliver to:</b> <span style="color:var(--pink);">${esc(o.to)}</span> (Gift${o.gm ? ': "' + esc(o.gm) + '"' : ''})` : ''}
           <br>
           <b>Email:</b> <a href="mailto:${esc(o.email)}" style="color:var(--pink);">${esc(o.email)}</a> · <b>Discord:</b> ${esc(o.dc || '-')}
         </p>
-
-        <p style="background:#140414;padding:8px 12px;border-radius:6px;border:1px solid var(--line);margin:8px 0;font-size:13px;">
+        <p style="background:#1c041b;padding:8px 12px;border-radius:6px;border:1px solid var(--line);margin:8px 0;">
           <b>Items:</b> ${itemsText}
         </p>
-
-        <p style="font-size:14px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-          <span>
-            <b>Paid:</b> <span style="color:#3ddc6b;font-weight:800;font-size:16px;">${money(+o.total || 0)}</span>
-            ${o.coupon ? `<small style="color:#ffb3dc;margin-left:6px;">(${esc(o.coupon)} applied)</small>` : ''}
-            · <b>UTR / Transaction:</b> <code style="background:#111;padding:3px 8px;border-radius:4px;color:var(--pink);font-weight:700;font-size:13px;">${esc(o.utr || '-')}</code>
-          </span>
-          <button type="button" class="cpb" onclick="window.viewOrderReceipt('${id}')" style="background:transparent;border:1px solid var(--pink);color:var(--pink);font-size:11px;padding:4px 10px;border-radius:4px;cursor:pointer;">
-            View Full Receipt & Details ➔
-          </button>
+        <p style="font-size:15px;margin:8px 0;">
+          <b>Paid:</b> <span style="color:#3ddc6b;font-weight:800;">${money(+o.total || 0)}</span> · <b>UTR / Transaction:</b> <code style="background:#111;padding:2px 6px;border-radius:4px;color:var(--pink);">${esc(o.utr || '-')}</code>
         </p>
-
-        ${o.ss ? `
-          <div style="margin:12px 0;background:#140513;border:1.5px solid var(--pink);padding:12px;border-radius:8px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-            <img src="${esc(o.ss)}" alt="Payment Proof" style="max-height:110px;max-width:180px;border-radius:6px;cursor:pointer;border:2px solid #555;object-fit:cover;background:#000;" onclick="window.openFullSS('${esc(o.ss)}')">
-            <div style="flex:1;min-width:180px;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                <b style="color:var(--pink);font-size:13px;">📸 Attached Payment Screenshot:</b>
-                <span style="color:#3ddc6b;font-size:11px;font-weight:700;background:rgba(61,220,107,0.1);padding:2px 6px;border-radius:4px;border:1px solid rgba(61,220,107,0.3);">✓ Screenshot Saved</span>
-              </div>
-              <small style="color:var(--mute);display:block;margin-bottom:8px;">Click preview image or the button to inspect full transaction details (UTR, amount, UPI name).</small>
-              <div style="display:flex;gap:8px;">
-                <button type="button" class="cpb view-ss-btn" data-ss="${esc(o.ss)}" onclick="window.openFullSS('${esc(o.ss)}')" style="background:var(--pink);color:#fff;border-color:var(--pink);font-size:12px;padding:4px 12px;border-radius:4px;font-weight:700;cursor:pointer;">🔍 Open Full Screenshot</button>
-                <button type="button" class="cpb btn-view-receipt" onclick="window.viewOrderReceipt('${id}')" style="background:#5865f2;color:#fff;border-color:#5865f2;font-size:12px;padding:4px 12px;border-radius:4px;font-weight:700;cursor:pointer;">📄 View Receipt</button>
-              </div>
-            </div>
-          </div>
-        ` : `
-          <div style="font-size:12px;color:var(--mute);margin:10px 0;padding:8px 12px;background:#241212;border-radius:6px;border:1px dashed #ff6b6b;display:flex;justify-content:space-between;align-items:center;">
-            <span>📸 Payment Screenshot: <i style="color:#ff8585;font-weight:700;">No screenshot attached for this order</i></span>
-            <button type="button" class="cpb btn-view-receipt" onclick="window.viewOrderReceipt('${id}')" style="background:#5865f2;color:#fff;border-color:#5865f2;font-size:11px;padding:3px 8px;border-radius:4px;cursor:pointer;">📄 View Receipt</button>
-          </div>
-        `}
-
         ${c ? `
           <div style="background:#3a1010;border:2px solid #ff6b6b;padding:8px 12px;border-radius:6px;margin:8px 0;color:#ffb3b3;">
             ⚠️ <b>Cancellation Requested by Customer:</b> ${c.why ? esc(c.why) : 'No reason specified'}
             ${String(c.email).toLowerCase() !== String(o.email).toLowerCase() ? '<br><small style="color:#ffd83a;">Note: Contact email does not match original checkout email.</small>' : ''}
           </div>
         ` : ''}
-
-        <div class="ord-actions" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button type="button" class="cpb btn-view-receipt" onclick="window.viewOrderReceipt('${id}')" style="background:#5865f2;color:#fff;border-color:#5865f2;font-weight:700;">📄 View Receipt</button>
-          <button type="button" class="cpb" onclick="window.copyOrderReceipt('${id}')" style="background:#222;color:#ffd1ee;border-color:var(--line);font-weight:700;">📋 Copy Receipt</button>
+        <div class="ord-actions">
           ${s !== 'resolved' ? `<button class="btn-res" data-id="${id}" data-s="resolved">✓ Mark as Resolved</button>` : ''}
           ${s !== 'cancelled' ? `<button class="btn-cxl" data-id="${id}" data-s="cancelled">✕ Cancel Order</button>` : ''}
           ${s !== 'pending' ? `<button class="btn-reopen" data-id="${id}" data-s="pending">↺ Move to Pending</button>` : ''}
@@ -987,15 +878,12 @@ if(btnAddTest){
     ];
     const items=testItems[Math.floor(Math.random()*testItems.length)];
     const tot=items.reduce((a,x)=>a+val(x.p)*x.q,0);
-    const testToken = 'TKN-' + Math.floor(1000 + Math.random() * 9000);
     ORD[id]={
-      id,token:testToken,t,email:testUser.toLowerCase()+'@gmail.com',user:testUser,
+      id,t,email:testUser.toLowerCase()+'@gmail.com',user:testUser,
       ed:Math.random()>0.5?'Java':'Bedrock',
       dc:testUser.toLowerCase()+'#1122',gift:false,to:testUser,gm:'',
       items,total:tot,
       utr:'UPI'+Math.floor(100000000000+Math.random()*900000000000),
-      ss:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='500' viewBox='0 0 400 500'><rect width='100%' height='100%' fill='%231a1a2e'/><circle cx='200' cy='100' r='45' fill='%2310b981'/><path d='M180 100 l15 15 l30 -30' stroke='white' stroke-width='6' fill='none' stroke-linecap='round'/><text x='200' y='175' fill='%23ffffff' font-size='20' font-weight='bold' font-family='sans-serif' text-anchor='middle'>Payment Successful</text><text x='200' y='215' fill='%2310b981' font-size='28' font-weight='bold' font-family='sans-serif' text-anchor='middle'>%E2%82%B9200.00</text><text x='200' y='250' fill='%23aaaaaa' font-size='13' font-family='sans-serif' text-anchor='middle'>Paid to: LycheeMC Store</text><rect x='30' y='280' width='340' height='150' rx='8' fill='%2316213e' stroke='%230f3460'/><text x='50' y='315' fill='%23888888' font-size='12' font-family='sans-serif'>Transaction ID / UTR:</text><text x='50' y='340' fill='%2300fff5' font-size='14' font-weight='bold' font-family='monospace'>UPI20261025001</text><text x='50' y='380' fill='%23888888' font-size='12' font-family='sans-serif'>Order Reference:</text><text x='50' y='405' fill='%23ffffff' font-size='14' font-weight='bold' font-family='monospace'>LMC-P8291A</text><text x='200' y='475' fill='%23666666' font-size='11' font-family='sans-serif' text-anchor='middle'>UPI Verified Proof</text></svg>",
-      ssName:'payment_proof_sample.png',
       status:'pending',
       history:[{t,s:'pending',note:'Test order created by owner'}]
     };
@@ -1038,27 +926,14 @@ function checkOwnerMode(){
     if(ownerActive){
       $('oi').innerHTML=R(6,1,4,2,'#fff')+R(3,2,10,13,'#fff')+R(4,3,8,11,'#ffd1ee')+R(5,6,6,1,'#7a2a5a')+R(5,8,6,1,'#7a2a5a')+R(5,10,4,1,'#7a2a5a');
       ob.onclick=()=>{
-        if($('admin')){
-          $('admin').hidden=false;
-          $('admin').scrollIntoView({behavior:'smooth'});
-          render();
-        }
+        $('admin').hidden=false;
+        render();
       };
     }
   }
   const ax=$('ax');
   if(ax) ax.onclick=()=>{ $('admin').hidden=true; };
-  if(ownerActive){
-    if($('admin')){
-      $('admin').hidden=false;
-      setTimeout(()=>{
-        try{ $('admin').scrollIntoView({behavior:'smooth'}); }catch(err){}
-      }, 150);
-      say('👑 Owner Dashboard Active (?owner)');
-    }
-  } else {
-    if($('admin')) $('admin').hidden=true;
-  }
+  if(!ownerActive && $('admin')) $('admin').hidden=true;
   render();
 }
 
@@ -1089,9 +964,55 @@ $('ti1').innerHTML=shardSvg(5);$('ti2').innerHTML=rankIcon(RANKS[0].c);$('ti3').
 if($('hdi'))$('hdi').innerHTML=bubble;
 const _dr=draw;draw=()=>{_dr();$('bkn').textContent=bag.reduce((a,i)=>a+i.q,0)};
 $('bk2').onclick=()=>$('cart').classList.add('on');
-function player3dSvg(n){let h=0;for(const c of (n||'Alex'))h=(h*31+c.charCodeAt(0))>>>0;const hair=['#d98336','#4a2a18','#2b2b2b','#e6c25e'][h%4],hairDark=['#b86927','#331c0e','#1a1a1a','#ba993c'][h%4],skinCol=['#e2a77f','#c68a5e','#8d5524','#f1c27d'][(h>>2)%4],skinDark=['#c98f68','#a87047','#6e3f17','#caa162'][(h>>2)%4],shirt=['#64a675','#2fa4ff','#f23ba5','#9b59b6'][(h>>4)%4],shirtDark=['#498458','#1f7ec9','#a01067','#71368a'][(h>>4)%4],eye=['#2f7a42','#2a6bd1','#4a2a1a'][(h>>6)%3];
- return `<svg viewBox="0 0 48 80" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><polygon points="24,6 36,12 24,18 12,12" fill="${hair}"/><polygon points="12,12 24,18 24,30 12,24" fill="${skinCol}"/><polygon points="12,12 24,18 24,21 12,15" fill="${hair}"/><polygon points="12,15 15,16.5 15,20 12,18.5" fill="${hair}"/><polygon points="16,21 18,22 18,24 16,23" fill="${eye}"/><polygon points="14,20 16,21 16,23 14,22" fill="#ffffff"/><polygon points="24,18 36,12 36,24 24,30" fill="${hairDark}"/><polygon points="24,24 27,22.5 27,33 24,34.5" fill="${hair}"/><polygon points="15,30 24,34.5 24,50 15,45.5" fill="${shirt}"/><polygon points="15,45.5 24,50 24,55 15,50.5" fill="#543722"/><polygon points="24,34.5 33,30 33,45.5 24,50" fill="${shirtDark}"/><polygon points="24,50 33,45.5 33,50.5 24,55" fill="#3d2717"/><polygon points="9,32 15,29 15,44 9,47" fill="${skinCol}"/><polygon points="9,32 15,29 15,34 9,37" fill="${shirt}"/><polygon points="33,29 39,32 39,47 33,44" fill="${skinDark}"/><polygon points="33,29 39,32 39,37 33,34" fill="${shirtDark}"/></svg>`}
-const skin=(el,n,url)=>{if(!el)return;const name=(n&&n!=='guest'&&n!=='none')?n:'Alex';el.innerHTML=player3dSvg(name);let target=url;if(!target||target.includes('/avatar/')||target.includes('/avatars/')||target.includes('/head/')){target='https://mc-heads.net/body/'+encodeURIComponent(name)}const i=new Image();i.alt=name+' 3D Player';i.onload=()=>{el.innerHTML='';el.appendChild(i)};i.onerror=()=>{const fb=new Image();fb.alt=name+' 3D Player';fb.onload=()=>{el.innerHTML='';el.appendChild(fb)};fb.onerror=()=>{el.innerHTML=player3dSvg(name)};fb.src='https://minotar.net/armor/bust/'+encodeURIComponent(name)+'/128'};i.src=target};
+function player3dSvg(n){
+  let h=0;
+  for(const c of (n||'Alex')) h=(h*31+c.charCodeAt(0))>>>0;
+  const hair = ['#d98336','#4a2a18','#2b1704','#edd585','#b53826'][(h>>2)%5];
+  const hairDark = ['#b86420','#351c0e','#1c0e02','#c9af62','#8c2314'][(h>>2)%5];
+  const skinCol = ['#f5c59f','#e8b388','#d89868','#b87340','#8c5028'][h%5];
+  const skinDark = ['#dca37b','#cb9267','#b87949','#985527','#6d3715'][h%5];
+  const shirt = ['#539d80','#3a6d8c','#8c3a50','#3a8c4c','#7852a9'][(h>>4)%5];
+  const shirtDark = ['#3d7a62','#285068','#6b293b','#276635','#57377f'][(h>>4)%5];
+  const eye = ['#2e8b57','#3a668c','#5a4436','#78428a'][(h>>6)%4];
+  return `<svg viewBox="0 0 48 80" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+    <polygon points="24,6 36,12 24,18 12,12" fill="${hair}"/>
+    <polygon points="12,12 24,18 24,30 12,24" fill="${skinCol}"/>
+    <polygon points="12,12 24,18 24,21 12,15" fill="${hair}"/>
+    <polygon points="12,15 15,16.5 15,20 12,18.5" fill="${hair}"/>
+    <polygon points="16,21 18,22 18,24 16,23" fill="${eye}"/>
+    <polygon points="14,20 16,21 16,23 14,22" fill="#ffffff"/>
+    <polygon points="24,18 36,12 36,24 24,30" fill="${hairDark}"/>
+    <polygon points="24,24 27,22.5 27,33 24,34.5" fill="${hair}"/>
+    <polygon points="15,30 24,34.5 24,50 15,45.5" fill="${shirt}"/>
+    <polygon points="15,45.5 24,50 24,55 15,50.5" fill="#543722"/>
+    <polygon points="24,34.5 33,30 33,45.5 24,50" fill="${shirtDark}"/>
+    <polygon points="24,50 33,45.5 33,50.5 24,55" fill="#3d2717"/>
+    <polygon points="9,32 15,29 15,44 9,47" fill="${skinCol}"/>
+    <polygon points="9,32 15,29 15,34 9,37" fill="${shirt}"/>
+    <polygon points="33,29 39,32 39,47 33,44" fill="${skinDark}"/>
+    <polygon points="33,29 39,32 39,37 33,34" fill="${shirtDark}"/>
+  </svg>`;
+}
+const skin=(el,n,url)=>{
+  if(!el) return;
+  const name = (n && n !== 'guest' && n !== 'none') ? n : 'Alex';
+  el.innerHTML = player3dSvg(name);
+  let target = url;
+  if(!target || target.includes('/avatar/') || target.includes('/avatars/') || target.includes('/head/')){
+    target = 'https://mc-heads.net/body/' + encodeURIComponent(name);
+  }
+  const i = new Image();
+  i.alt = name + ' 3D Player';
+  i.onload = () => { el.innerHTML = ''; el.appendChild(i); };
+  i.onerror = () => {
+    const fb = new Image();
+    fb.alt = name + ' 3D Player';
+    fb.onload = () => { el.innerHTML = ''; el.appendChild(fb); };
+    fb.onerror = () => { el.innerHTML = player3dSvg(name); };
+    fb.src = 'https://minotar.net/armor/bust/' + encodeURIComponent(name) + '/128';
+  };
+  i.src = target;
+};
 let me=null;try{me=JSON.parse(localStorage.getItem('lmc_me'))}catch(e){}
 function paintMe(){$('lgt').innerHTML=me?'Click to logout<br><b>'+esc(me.n.toUpperCase())+'</b>':'Click to login<br><b>NONE</b>';skin($('lgs'),me?me.n:'Alex',me&&me.url);const u=document.querySelector('[name=user]');if(me&&u&&!u.value)u.value=me.n}
 async function lookup(n){try{const c=new AbortController(),t=setTimeout(()=>c.abort(),4000);const r=await fetch('https://playerdb.co/api/player/minecraft/'+encodeURIComponent(n),{signal:c.signal});clearTimeout(t);const j=await r.json();return j.success?{ok:true,url:'https://mc-heads.net/body/'+encodeURIComponent(j.data.player.username||n),name:j.data.player.username}:{ok:false,url:'https://mc-heads.net/body/'+encodeURIComponent(n),name:n}}catch(e){return {ok:false,url:'https://mc-heads.net/body/'+encodeURIComponent(n),name:n}}}
@@ -1099,7 +1020,7 @@ $('lg').onclick=()=>{if(me){me=null;try{localStorage.removeItem('lmc_me')}catch(
 $('lc').onclick=shut;
 $('lf').onsubmit=async e=>{e.preventDefault();const n=new FormData(e.target).get('u').trim();$('lm').textContent='Checking account...';const r=await lookup(n);
  me={n:r&&r.ok?r.name:n,url:r&&r.ok?r.url:''};try{localStorage.setItem('lmc_me',JSON.stringify(me))}catch(x){}
- $('lm').textContent=r?(r.ok?'Premium account found. Your 3D player skin is shown.':'No premium account found for that name. You can still shop, and items go to this username.'):'Could not check premium status from this page, so a default 3D player is shown.';
+ $('lm').textContent=r?(r.ok?'Premium account found. Your skin is shown.':'No premium account found for that name. You can still shop, and items go to this username.'):'Could not check premium status from this page, so a default 3D player is shown.';
  paintMe();setTimeout(shut,1800)};
 paintMe();draw();
 
@@ -1265,8 +1186,8 @@ if (typeof cats !== 'undefined') {
 
 // Update Category Tile 4 preview
 const ti4 = document.getElementById('ti4');
-if (ti4) {
-  ti4.innerHTML = `<img src="${b64_icons['fandom']}" style="height:76px;width:auto;image-rendering:pixelated;transform:rotate(-25deg);filter:drop-shadow(0 0 10px #ff3a3a);">`;
+if (ti4 && typeof SABERS !== 'undefined' && SABERS.length > 0) {
+  ti4.innerHTML = `<img src="${SABERS[0].icon}" style="height:76px;width:auto;image-rendering:pixelated;transform:rotate(-25deg);filter:drop-shadow(0 0 12px #b44cff);">`;
 }
 
 // Initialize Sabers
@@ -1668,7 +1589,6 @@ renderSaberCards();
       if($('amt')) $('amt').textContent = '₹' + finalTotal;
       if($('oid')) $('oid').textContent = od.id;
 
-      resetSS();
       step(2);
       mkProgress(2);
       mkTokenPay();
@@ -1686,14 +1606,8 @@ renderSaberCards();
   if(form2){
     form2.onsubmit = function(e){
       e.preventDefault();
-      if(!currentSS){
-        say('⚠️ Please attach your payment screenshot first!');
-        return;
-      }
       stopTimer();
       od.utr = new FormData(e.target).get('utr');
-      od.ss = currentSS ? currentSS.dataUrl : null;
-      od.ssName = currentSS ? currentSS.name : null;
 
       const sumLines = [
         '================================',
@@ -1708,21 +1622,12 @@ renderSaberCards();
         'Email: ' + od.email,
         'Discord: ' + od.dc,
         'UTR / Ref No: ' + od.utr,
-        'Payment Screenshot: ' + (od.ss ? 'Attached & Saved (Verified ✓)' : 'None'),
         'Status: PENDING VERIFICATION',
         '================================',
         'LMC1:' + enc(od)
       ];
 
       $('sum').textContent = sumLines.join('\n');
-      const s3Box = document.getElementById('s3-ss-box');
-      const s3Img = document.getElementById('s3-ss-img');
-      if(s3Box && s3Img && od.ss){
-        s3Img.src = od.ss;
-        s3Box.style.display = 'block';
-      } else if(s3Box){
-        s3Box.style.display = 'none';
-      }
       step(3);
       mkProgress(3);
       mkTokenConfirm();
@@ -1939,307 +1844,6 @@ renderSaberCards();
 
 })();
 
-
-// ===== PAYMENT SCREENSHOT & DROPZONE LOGIC =====
-let currentSS = null;
-
-window.openFullSS = function(src){
-  const lb = document.getElementById('ss-lightbox');
-  const img = document.getElementById('ss-lightbox-img');
-  if(lb && img && src){
-    img.src = src;
-    lb.classList.add('on');
-  }
-};
-
-function resetSS(){
-  currentSS = null;
-  const idle = document.getElementById('ss-idle');
-  const prev = document.getElementById('ss-preview');
-  const dz = document.getElementById('ss-dropzone');
-  const badge = document.getElementById('ss-status-badge');
-  const hint = document.getElementById('ss-hint');
-  const fileIn = document.getElementById('ss-file-input');
-  if(idle) idle.style.display = 'block';
-  if(prev) prev.style.display = 'none';
-  if(dz) dz.classList.remove('has-file', 'dragover');
-  if(badge){
-    badge.textContent = 'Screenshot Missing';
-    badge.style.color = '#ff8585';
-  }
-  if(hint){
-    hint.textContent = '⚠️ You must attach a screenshot of your successful UPI payment to enable the "I\'ve paid" button.';
-    hint.style.color = '#ffd83a';
-  }
-  if(fileIn) fileIn.value = '';
-  checkPaidBtn();
-}
-
-function checkPaidBtn(){
-  const btn = document.getElementById('btn-paid');
-  const utrIn = document.getElementById('utr-input');
-  if(!btn) return;
-  const utrVal = utrIn ? utrIn.value.trim() : '';
-  const hasSS = currentSS !== null;
-  const utrOk = utrVal.length >= 8;
-  const canSubmit = hasSS && utrOk;
-  btn.disabled = !canSubmit;
-  if(!hasSS){
-    btn.title = 'Please attach your payment screenshot first';
-  } else if(!utrOk){
-    btn.title = 'Please enter your 8+ digit UTR or transaction ID';
-  } else {
-    btn.title = 'Click to confirm your payment';
-  }
-}
-
-function handleSSFile(file){
-  if(!file) return;
-  if(!file.type || !file.type.startsWith('image/')){
-    say('Please select an image file (PNG, JPG, WEBP)');
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const rawDataUrl = e.target.result;
-    const img = new Image();
-    img.onload = function(){
-      let w = img.width, h = img.height;
-      const maxDim = 1200;
-      if(w > maxDim || h > maxDim){
-        if(w > h){ h = Math.round(h * (maxDim / w)); w = maxDim; }
-        else { w = Math.round(w * (maxDim / h)); h = maxDim; }
-      }
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      const optDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-      const sizeKb = Math.round(optDataUrl.length * 3 / 4 / 1024);
-
-      currentSS = {
-        dataUrl: optDataUrl,
-        name: file.name || 'payment_proof.jpg',
-        size: sizeKb + ' KB'
-      };
-
-      const idle = document.getElementById('ss-idle');
-      const prev = document.getElementById('ss-preview');
-      const dz = document.getElementById('ss-dropzone');
-      const thumb = document.getElementById('ss-thumb');
-      const nameEl = document.getElementById('ss-name');
-      const sizeEl = document.getElementById('ss-size');
-      const badge = document.getElementById('ss-status-badge');
-      const hint = document.getElementById('ss-hint');
-
-      if(thumb) thumb.src = optDataUrl;
-      if(nameEl) nameEl.textContent = currentSS.name;
-      if(sizeEl) sizeEl.textContent = currentSS.size;
-      if(idle) idle.style.display = 'none';
-      if(prev) prev.style.display = 'flex';
-      if(dz) dz.classList.add('has-file');
-      if(badge){
-        badge.textContent = '✓ Attached';
-        badge.style.color = '#3ddc6b';
-      }
-      if(hint){
-        hint.textContent = '✓ Payment screenshot attached successfully! Now verify your UTR number.';
-        hint.style.color = '#3ddc6b';
-      }
-      checkPaidBtn();
-      say('Screenshot attached!');
-    };
-    img.src = rawDataUrl;
-  };
-  reader.readAsDataURL(file);
-}
-
-function initScreenshotDropzone(){
-  const dz = document.getElementById('ss-dropzone');
-  const fileIn = document.getElementById('ss-file-input');
-  const removeBtn = document.getElementById('ss-remove');
-  const utrIn = document.getElementById('utr-input');
-  const lb = document.getElementById('ss-lightbox');
-  const lbClose = document.getElementById('ss-lightbox-close');
-
-  if(dz && fileIn){
-    dz.onclick = function(e){
-      if(e.target === removeBtn || (removeBtn && removeBtn.contains(e.target))) return;
-      fileIn.click();
-    };
-    dz.onkeydown = function(e){
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        fileIn.click();
-      }
-    };
-    dz.ondragover = function(e){
-      e.preventDefault();
-      dz.classList.add('dragover');
-    };
-    dz.ondragleave = function(e){
-      e.preventDefault();
-      dz.classList.remove('dragover');
-    };
-    dz.ondrop = function(e){
-      e.preventDefault();
-      dz.classList.remove('dragover');
-      if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]){
-        handleSSFile(e.dataTransfer.files[0]);
-      }
-    };
-    fileIn.onchange = function(e){
-      if(e.target.files && e.target.files[0]){
-        handleSSFile(e.target.files[0]);
-      }
-    };
-  }
-
-  if(removeBtn){
-    removeBtn.onclick = function(e){
-      e.stopPropagation();
-      resetSS();
-      say('Screenshot removed');
-    };
-  }
-
-  if(utrIn){
-    utrIn.oninput = checkPaidBtn;
-  }
-
-  // Clipboard paste support for screenshots (Ctrl+V)
-  window.addEventListener('paste', function(e){
-    const s2 = document.getElementById('s2');
-    if(!s2 || s2.hidden) return;
-    if(e.clipboardData && e.clipboardData.items){
-      for(let i = 0; i < e.clipboardData.items.length; i++){
-        const item = e.clipboardData.items[i];
-        if(item.type && item.type.startsWith('image/')){
-          const blob = item.getAsFile();
-          if(blob){
-            handleSSFile(blob);
-            break;
-          }
-        }
-      }
-    }
-  });
-
-  // Lightbox handlers
-  if(lbClose && lb){
-    lbClose.onclick = function(){ lb.classList.remove('on'); };
-    lb.onclick = function(e){ if(e.target === lb) lb.classList.remove('on'); };
-  }
-
-  const s3View = document.getElementById('s3-ss-view');
-  const s3Img = document.getElementById('s3-ss-img');
-  if(s3View && s3Img){
-    s3View.onclick = function(){ window.openFullSS(s3Img.src); };
-    s3Img.onclick = function(){ window.openFullSS(s3Img.src); };
-  }
-
-  document.addEventListener('click', function(e){
-    const btn = e.target.closest('.view-ss-btn');
-    if(btn && btn.dataset.ss){
-      window.openFullSS(btn.dataset.ss);
-    }
-  });
-}
-
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', initScreenshotDropzone);
-} else {
-  initScreenshotDropzone();
-}
-
 </script>
-
-
-<!-- Order Receipt Modal for Owner Dashboard -->
-<div class="ss-modal-ov" id="receipt-modal">
-  <div class="rm-card">
-    <div class="rm-head">
-      <div>
-        <h2 style="margin:0;font-size:18px;color:#fff;display:flex;align-items:center;gap:10px;">
-          <span>📄 Order Receipt & Summary</span>
-          <span id="rm-status" class="pill s-pending" style="font-size:11px;">PENDING</span>
-        </h2>
-        <small style="color:var(--mute);font-size:12px;" id="rm-date"></small>
-      </div>
-      <button type="button" class="x" id="rm-close" style="margin:0;padding:6px 12px;font-size:14px;">✕</button>
-    </div>
-
-    <div class="rm-body">
-      <!-- Order ID & Token Header -->
-      <div style="background:#160515;border:1.5px solid #7a2a5a;border-radius:8px;padding:12px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <div>
-          <span style="font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:1px;display:block;">Order Number</span>
-          <b id="rm-id" style="font-size:18px;color:var(--pink);letter-spacing:1px;"></b>
-        </div>
-        <div style="text-align:right;">
-          <span style="font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:1px;display:block;">Token Number</span>
-          <b id="rm-token" style="font-size:16px;color:#ffd83a;"></b>
-        </div>
-      </div>
-
-      <!-- Customer Details -->
-      <div style="background:#1c041b;border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.7;">
-        <div><b>Customer IGN:</b> <span id="rm-user" style="color:#fff;font-weight:700;"></span> (<span id="rm-ed" style="color:var(--pink);"></span>)</div>
-        <div id="rm-deliver-row"><b>Deliver To:</b> <span id="rm-to" style="color:#ffb3dc;font-weight:700;"></span></div>
-        <div><b>Email:</b> <span id="rm-email" style="color:#fff;"></span></div>
-        <div><b>Discord:</b> <span id="rm-dc" style="color:#fff;"></span></div>
-        <div><b>UTR / Reference:</b> <code id="rm-utr" style="background:#111;padding:2px 8px;border-radius:4px;color:var(--pink);font-weight:700;"></code></div>
-      </div>
-
-      <!-- Items Table -->
-      <div style="margin-bottom:14px;">
-        <b style="font-size:13px;color:#fff;margin-bottom:6px;display:block;">Purchased Items:</b>
-        <div id="rm-items" style="background:#120311;border:1px solid var(--line);border-radius:8px;padding:10px;"></div>
-      </div>
-
-      <!-- Total & Coupon -->
-      <div style="display:flex;justify-content:space-between;align-items:center;background:#180617;padding:10px 14px;border-radius:8px;border:1.5px solid #7a2a5a;margin-bottom:14px;">
-        <span style="font-size:14px;color:var(--mute);">Total Amount Paid:</span>
-        <b id="rm-total" style="font-size:20px;color:#3ddc6b;"></b>
-      </div>
-
-      <!-- Payment Screenshot in Receipt -->
-      <div id="rm-ss-section" style="margin-bottom:14px;background:#150617;border:1.5px dashed var(--pink);border-radius:8px;padding:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <b style="color:var(--pink);font-size:13px;">📸 Attached Payment Screenshot:</b>
-          <button type="button" class="cpb" id="rm-ss-zoom-btn" style="background:var(--pink);color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;cursor:pointer;">🔍 Open Full Screenshot</button>
-        </div>
-        <img id="rm-ss-img" src="" style="max-height:180px;max-width:100%;border-radius:6px;display:block;margin:0 auto;cursor:pointer;border:2px solid #555;object-fit:contain;background:#000;" alt="Payment Proof">
-      </div>
-      <div id="rm-no-ss" style="display:none;margin-bottom:14px;padding:10px 12px;background:#241212;border:1px dashed #ff6b6b;border-radius:6px;font-size:12px;color:#ff8585;">
-        ⚠️ No payment screenshot was attached with this order.
-      </div>
-
-      <!-- Raw text receipt / copy box -->
-      <details style="background:#111;border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin-bottom:8px;">
-        <summary style="cursor:pointer;font-size:12px;color:var(--mute);">View Raw Formatted Text Receipt</summary>
-        <pre id="rm-raw" style="white-space:pre-wrap;font-size:11px;color:#ccc;margin-top:8px;user-select:all;max-height:140px;overflow-y:auto;background:#080808;padding:8px;border-radius:4px;"></pre>
-      </details>
-    </div>
-
-    <!-- Modal Footer Actions -->
-    <div class="rm-foot">
-      <button type="button" class="cpb" id="rm-copy-btn" style="background:#5865f2;color:#fff;border-color:#5865f2;font-weight:700;">📋 Copy Receipt</button>
-      <button type="button" class="cpb" id="rm-cmd-btn" style="background:#222;color:var(--pink);border-color:var(--line);font-weight:700;">⚡ Copy In-Game Commands</button>
-      <button type="button" class="x" id="rm-close-bottom">✕ Close</button>
-    </div>
-  </div>
-</div>
-
-<div class="ss-modal-ov" id="ss-lightbox">
-  <div class="ss-modal-box">
-    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--line);padding-bottom:8px;">
-      <b style="color:#fff;font-size:16px;">📸 Payment Screenshot Proof</b>
-      <button type="button" class="x" id="ss-lightbox-close" style="margin:0;padding:4px 10px;">✕ Close</button>
-    </div>
-    <img id="ss-lightbox-img" alt="Full Payment Screenshot">
-  </div>
-</div>
-
 </body>
 </html>
