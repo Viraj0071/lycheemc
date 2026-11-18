@@ -1525,31 +1525,84 @@
       color: #fff;
     }
 
-    .qr-banner-strip {
+    /* UPI QR Display Card */
+    .upi-qr-card {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 14px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px dashed var(--border-card);
+      background: linear-gradient(180deg, rgba(20, 24, 33, 0.95), rgba(13, 16, 23, 0.95));
+      border: 1.5px solid var(--border-cyan);
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 16px 14px;
+      text-align: center;
+      gap: 12px;
+      position: relative;
+    }
+    .upi-qr-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+    }
+    .upi-qr-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--cyan-bright);
+      text-transform: uppercase;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .upi-qr-amount-callout {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .upi-qr-amount-callout span {
+      color: var(--cyan-bright);
+      text-shadow: 0 0 12px var(--cyan-glow);
+    }
+    .upi-qr-frame {
+      width: 220px;
+      max-width: 100%;
+      background: #0d1017;
       border-radius: var(--radius-md);
-      padding: 12px 14px;
-      margin-top: 4px;
+      padding: 10px;
+      border: 2px solid rgba(0, 229, 255, 0.45);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
-    .qr-fake-thumb {
-      width: 48px;
-      height: 48px;
-      background: #fff;
-      border-radius: 6px;
-      padding: 4px;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-    }
-    .qr-fake-thumb img {
+    .upi-qr-frame img {
       width: 100%;
-      height: 100%;
-      image-rendering: pixelated;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      object-fit: contain;
+    }
+    .upi-qr-apps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .upi-app-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-card);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: var(--text-sub);
     }
 
     /* Card Details Grid */
@@ -2176,35 +2229,59 @@
             </button>
           </div>
 
-          <!-- UPI Form Fields -->
+          <!-- UPI Form Fields with Actual QR Code -->
           <div id="upiFormContent" class="upi-box">
-            <div class="pay-form-group">
-              <label class="pay-form-label" for="payUpiId">
-                <span>Enter Your UPI ID (VPA)</span>
-                <span style="color: var(--cyan-bright);">Instant Approval</span>
+            <!-- Sleek QR Display Box -->
+            <div class="upi-qr-card">
+              <div class="upi-qr-header">
+                <span class="upi-qr-badge">⚡ Instant UPI QR Payment</span>
+                <div class="upi-qr-amount-callout">
+                  Scan &amp; Pay: <span id="upiDisplayAmount">₹0</span>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">
+                  Scan this official LycheeMC QR code using any UPI app
+                </div>
+              </div>
+
+              <!-- Official User-Uploaded FamPay UPI QR Code -->
+              <div class="upi-qr-frame">
+                <img src="public/images/upi-qr.png" alt="LycheeMC Official UPI QR" onerror="this.src='upi-qr.png'">
+              </div>
+
+              <div class="upi-qr-apps">
+                <span class="upi-app-pill">Google Pay</span>
+                <span class="upi-app-pill">PhonePe</span>
+                <span class="upi-app-pill">Paytm</span>
+                <span class="upi-app-pill">FamPay</span>
+                <span class="upi-app-pill">BHIM</span>
+                <span class="upi-app-pill">CRED</span>
+              </div>
+            </div>
+
+            <!-- UTR Verification Input (Crucial for Indian UPI Delivery) -->
+            <div class="pay-form-group" style="margin-top: 6px;">
+              <label class="pay-form-label" for="payUpiUtr">
+                <span>Enter 12-Digit UPI Ref / UTR Number</span>
+                <span style="color: #10b981; font-weight: 700;">*Required to verify &amp; deliver</span>
               </label>
               <div class="pay-form-input-wrap">
-                <span style="font-weight: 800; color: #10b981;">UPI</span>
-                <input type="text" id="payUpiId" placeholder="e.g. username@okhdfcbank or 9876543210@paytm">
+                <span style="font-weight: 800; color: #10b981;">UTR</span>
+                <input type="text" id="payUpiUtr" maxlength="18" placeholder="e.g. 412345678901 (from your payment receipt)">
               </div>
+              <span style="font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+                After paying in PhonePe/GPay/FamPay/Paytm, find the 12-digit <strong>UTR / UPI Ref Number</strong> on your transaction screen and enter it here.
+              </span>
             </div>
 
-            <!-- Quick UPI Handles -->
-            <div class="upi-quick-pills">
-              <span style="font-size: 11px; color: var(--text-dim); align-self: center;">Popular:</span>
-              <button type="button" class="upi-pill" onclick="appendUpiHandle('@okhdfcbank')">@okhdfcbank</button>
-              <button type="button" class="upi-pill" onclick="appendUpiHandle('@okaxis')">@okaxis</button>
-              <button type="button" class="upi-pill" onclick="appendUpiHandle('@paytm')">@paytm</button>
-              <button type="button" class="upi-pill" onclick="appendUpiHandle('@ybl')">@ybl</button>
-            </div>
-
-            <div class="qr-banner-strip">
-              <div class="qr-fake-thumb">
-                <img src="public/images/logo.png" alt="QR" onerror="this.src='logo.png'">
-              </div>
-              <div style="font-size: 12px; line-height: 1.4;">
-                <strong style="color: #fff;">Scan &amp; Pay via any UPI App:</strong><br>
-                <span style="color: var(--text-muted);">Supports Google Pay, PhonePe, Paytm, BHIM &amp; Cred</span>
+            <!-- Optional UPI ID -->
+            <div class="pay-form-group">
+              <label class="pay-form-label" for="payUpiId">
+                <span>Your UPI ID / Mobile (Optional)</span>
+                <span style="color: var(--text-dim);">For secondary matching</span>
+              </label>
+              <div class="pay-form-input-wrap">
+                <span style="font-weight: 800; color: var(--text-muted);">@</span>
+                <input type="text" id="payUpiId" placeholder="e.g. 9876543210@paytm or yourname@okhdfcbank">
               </div>
             </div>
           </div>
@@ -2300,6 +2377,10 @@
           <span style="color: var(--text-muted);">Payment Method:</span>
           <span id="successMethod" style="color: var(--cyan-bright); font-weight: 700;">UPI</span>
         </div>
+        <div class="receipt-row" id="receiptUtrRow">
+          <span style="color: var(--text-muted);">UPI Ref / UTR:</span>
+          <span id="successUtr" style="font-family: var(--font-mono); color: #10b981; font-weight: 800;">-</span>
+        </div>
         <div class="receipt-row">
           <span style="color: var(--text-muted);">Transaction ID:</span>
           <span id="successTxnId" style="font-family: var(--font-mono); color: #10b981; font-weight: 800;">LM-UPI-984210</span>
@@ -2308,6 +2389,15 @@
           <span style="color: var(--text-muted);">Total Paid:</span>
           <strong id="successTotal" style="color: #fff; font-size: 15px;">₹0</strong>
         </div>
+        <div class="receipt-row" style="border-top: 1px dashed var(--border-card); padding-top: 8px; margin-top: 6px;">
+          <span style="color: var(--text-muted);">Delivery Status:</span>
+          <span id="successDeliveryStatus" style="color: var(--cyan-bright); font-weight: 800;">⚡ Sent to In-Game Server</span>
+        </div>
+      </div>
+
+      <div style="background: rgba(0, 229, 255, 0.08); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 12px; line-height: 1.5; color: var(--text-sub); text-align: left;">
+        <strong style="color: #fff;">🎮 How to claim in-game:</strong><br>
+        Log in to <code style="color: var(--cyan-bright); background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px;">play.lycheemc.fun</code> using your IGN. Your keys, shards, or permanent rank will automatically synchronize with your player profile.
       </div>
 
       <button class="btn-checkout" onclick="closeSuccessModal()" style="width: 100%;">
@@ -2367,661 +2457,7 @@
   <!-- =====================================================================
        CLIENT CATALOG DATA & SCRIPT LOGIC
        ===================================================================== -->
-  <script>
-    // --- 1. PRODUCT CATALOG DATA ---
-    const RANKS = [
-      {
-        id: 'rank-premium',
-        name: 'PREMIUM Rank',
-        priceNum: 49,
-        priceDisplay: '₹49',
-        category: 'ranks',
-        glowColor: '#3b82f6',
-        img: 'public/images/ranks/premium.png',
-        desc: 'Permanent starter rank with essential VIP commands, chat color, and bonus claim blocks.',
-        perks: ['3 Set Homes', '/hat command', 'White & Blue Chat Glow', 'Premium Kit every 24h', 'Queue Priority Tier 1']
-      },
-      {
-        id: 'rank-ocean',
-        name: 'OCEAN Rank',
-        priceNum: 99,
-        priceDisplay: '₹99',
-        category: 'ranks',
-        glowColor: '#00e5ff',
-        img: 'public/images/ranks/ocean.png',
-        desc: 'Ocean master rank with water breathing perks, extra homes, and crate bonus keys.',
-        perks: ['5 Set Homes', '/feed command', 'Ocean Blue Chat Glow', 'Ocean Kit + 1x Matrix Key', 'Permanent Water Breathing']
-      },
-      {
-        id: 'rank-coconut',
-        name: 'COCONUT Rank',
-        priceNum: 149,
-        priceDisplay: '₹149',
-        category: 'ranks',
-        glowColor: '#84cc16',
-        img: 'public/images/ranks/coconut.png',
-        desc: 'Tropical champion rank with portable crafting, bonus homes, and double claim rate.',
-        perks: ['7 Set Homes', '/workbench command', 'Coconut Vine Chat Glow', 'Coconut Armor Kit + 2x Matrix Keys', 'Keep XP on Death (50%)']
-      },
-      {
-        id: 'rank-turtle',
-        name: 'TURTLE Rank',
-        priceNum: 199,
-        priceDisplay: '₹199',
-        category: 'ranks',
-        glowColor: '#10b981',
-        img: 'public/images/ranks/turtle.png',
-        desc: 'Heavy shell combat tier with Diamond Prot III armor kit, near command, and Arcane key.',
-        perks: ['10 Set Homes', '/near radar command', 'Emerald Turtle Chat Glow', 'Turtle God Kit + 1x Arcane Key', 'Death Chest Protection']
-      },
-      {
-        id: 'rank-lychee-plus',
-        name: 'LYCHEE+ Apex Rank',
-        priceNum: 249,
-        priceDisplay: '₹249',
-        category: 'ranks',
-        glowColor: '#f43f5e',
-        img: 'public/images/ranks/lychee-plus.png',
-        desc: 'The ultimate royal apex rank. Flight in claims, full Prot IV Netherite kit, and Monthly key.',
-        perks: ['15 Set Homes', '/fly command inside claims', 'Crimson & Gold Royal Glow', 'Lychee+ God Kit + 1x Monthly Key', 'Full Keep Inventory perk']
-      }
-    ];
-
-    const KEYS = [
-      {
-        id: 'key-matrix',
-        name: 'Matrix Key ×3',
-        priceNum: 99,
-        priceDisplay: '₹99',
-        category: 'keys',
-        reward: '250 Shards for 3x',
-        glowColor: '#a855f7',
-        img: 'public/images/keys/matrix-key.png',
-        desc: 'Pack of 3 mysterious purple Matrix keys. Grants rare enchantments, vital resources, and 250 shards in-game.'
-      },
-      {
-        id: 'key-arcane',
-        name: 'Arcane Key ×3',
-        priceNum: 149,
-        priceDisplay: '₹149',
-        category: 'keys',
-        reward: '500 Shards for 3x',
-        glowColor: '#00e5ff',
-        img: 'public/images/keys/arcane-key.png',
-        desc: 'Pack of 3 magical cyan Arcane keys. Unlocks mythical tools, high-tier armor, and 500 shards bonus.'
-      },
-      {
-        id: 'key-monthly',
-        name: 'Monthly Key ×3',
-        priceNum: 199,
-        priceDisplay: '₹199',
-        category: 'keys',
-        reward: '1500 Shards for 3x',
-        glowColor: '#ffb300',
-        img: 'public/images/keys/monthly-key.png',
-        desc: 'Pack of 3 golden premium Monthly keys. Exclusive monthly cosmetics, seasonal gear, and 1500 shards bonus.'
-      }
-    ];
-
-    const SHARDS = [
-      {
-        id: 'shards-1k',
-        name: '1,000 Shards',
-        priceNum: 49,
-        priceDisplay: '₹49',
-        category: 'shards',
-        glowColor: '#00e5ff',
-        img: 'public/images/shards/1k-shards.png',
-        desc: 'Starter gemstone cluster to kick off server trading, shop unlocks, and beginner upgrades.'
-      },
-      {
-        id: 'shards-3k',
-        name: '3,000 Shards',
-        priceNum: 129,
-        priceDisplay: '₹129',
-        category: 'shards',
-        glowColor: '#00e5ff',
-        img: 'public/images/shards/3k-shards.png',
-        desc: 'Medium adventurer crystal cluster. Ideal for intermediate kits and weapon enchants.'
-      },
-      {
-        id: 'shards-5k',
-        name: '5,000 Shards',
-        priceNum: 159,
-        priceDisplay: '₹159',
-        category: 'shards',
-        glowColor: '#00e5ff',
-        img: 'public/images/shards/5k-shards.png',
-        desc: 'Hero crystal formation. Most popular server economy booster for serious faction leaders.'
-      },
-      {
-        id: 'shards-10k',
-        name: '10,000 Shards',
-        priceNum: 219,
-        priceDisplay: '₹219',
-        category: 'shards',
-        glowColor: '#ffb300',
-        highlight: true,
-        img: 'public/images/shards/10k-shards.png',
-        desc: 'Huge premium treasure chest overflowing with glowing crystals. Maximum value pack with best rate per shard!'
-      }
-    ];
-
-    const ALL_PRODUCTS = [...RANKS, ...KEYS, ...SHARDS];
-
-    const POPUP_CONFIGS = {
-      ranks: {
-        title: '👑 Permanent Server Ranks',
-        subtitle: 'Select your preferred rank tier with lifetime perks, kits, and chat glows',
-        glow: 'rgba(59, 130, 246, 0.4)',
-        items: RANKS
-      },
-      keys: {
-        title: '🗝️ Crate Key Bundles',
-        subtitle: 'Pack of 3 crate keys with special shard rewards and rare loot drops',
-        glow: 'rgba(168, 85, 247, 0.4)',
-        items: KEYS
-      },
-      shards: {
-        title: '💎 Lychee Shards Packages',
-        subtitle: 'Premium server gemstone packs and crystal vaults for trading and upgrades',
-        glow: 'rgba(0, 229, 255, 0.4)',
-        items: SHARDS
-      }
-    };
-
-    // --- 2. STATE ---
-    let cart = [];
-    let playerIGN = localStorage.getItem('lychee_ign') || '';
-    let selectedEdition = 'java';
-    let currentPayMethod = 'upi';
-
-    try {
-      const savedCart = localStorage.getItem('lychee_cart');
-      if (savedCart) cart = JSON.parse(savedCart);
-    } catch(e) {}
-
-    // --- 3. CATEGORY POPUPS ---
-    function openCategoryPopup(categoryKey) {
-      const config = POPUP_CONFIGS[categoryKey];
-      if (!config) return;
-
-      const overlay = document.getElementById('categoryPopupOverlay');
-      const win = document.getElementById('categoryPopupWindow');
-      const titleEl = document.getElementById('popupWindowTitle');
-      const subEl = document.getElementById('popupWindowSub');
-      const grid = document.getElementById('popupProductsGrid');
-
-      win.style.setProperty('--window-glow', config.glow);
-      titleEl.innerHTML = config.title;
-      subEl.textContent = config.subtitle;
-
-      grid.innerHTML = config.items.map(p => createCardHTML(p)).join('');
-
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeCategoryPopup() {
-      const overlay = document.getElementById('categoryPopupOverlay');
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function closePopupOnOverlay(e) {
-      if (e.target.id === 'categoryPopupOverlay') {
-        closeCategoryPopup();
-      }
-    }
-
-    // Escape listener
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeCategoryPopup();
-        closePaymentWindow();
-        closeSuccessModal();
-        const cartOverlay = document.getElementById('cartOverlay');
-        if (cartOverlay.classList.contains('open')) toggleCart();
-      }
-    });
-
-    // --- 4. PRODUCT CARD RENDER ---
-    function createCardHTML(p) {
-      const isHighlight = p.highlight ? 'highlight-card' : '';
-      const tagHTML = p.highlight 
-        ? `<span class="product-tag tag-best-value">🔥 Best Value</span>`
-        : (p.reward ? `<span class="product-tag tag-reward">${p.reward}</span>` : '');
-
-      const perksHTML = p.perks 
-        ? `<ul class="product-perks-list">${p.perks.map(perk => `<li>${perk}</li>`).join('')}</ul>`
-        : '';
-
-      return `
-        <article class="product-card ${isHighlight}" style="--card-glow-color: ${p.glowColor}40;" data-id="${p.id}">
-          <div class="product-img-box">
-            ${tagHTML}
-            <img src="${p.img}" alt="${p.name}" class="product-img" onerror="this.onerror=null;this.src='public/images/logo.png'">
-          </div>
-          <div class="product-info">
-            <span class="product-category-label">${p.category}</span>
-            <h3 class="product-title">${p.name}</h3>
-            <p class="product-desc">${p.desc}</p>
-            ${perksHTML}
-            <div class="product-footer">
-              <div class="price-box">
-                <span class="price-label">Price</span>
-                <span class="price-val">${p.priceDisplay}</span>
-              </div>
-              <button class="btn-add-cart" onclick="addToCart('${p.id}', this)">
-                <span>Add to Cart</span> 🛒
-              </button>
-            </div>
-          </div>
-        </article>
-      `;
-    }
-
-    // --- 5. CART LOGIC ---
-    function addToCart(productId, btnEl) {
-      const prod = ALL_PRODUCTS.find(p => p.id === productId);
-      if (!prod) return;
-
-      const existing = cart.find(item => item.id === productId);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({
-          id: prod.id,
-          name: prod.name,
-          price: prod.priceNum,
-          priceDisplay: prod.priceDisplay,
-          img: prod.img,
-          qty: 1
-        });
-      }
-
-      saveCart();
-      updateCartUI();
-
-      if (btnEl) {
-        const origHTML = btnEl.innerHTML;
-        btnEl.classList.add('added');
-        btnEl.innerHTML = '<span>Added!</span> ✔';
-        setTimeout(() => {
-          btnEl.classList.remove('added');
-          btnEl.innerHTML = origHTML;
-        }, 1200);
-      }
-
-      showToast(`Added <strong>${prod.name}</strong> to your cart!`);
-    }
-
-    function updateCartQty(productId, delta) {
-      const item = cart.find(i => i.id === productId);
-      if (!item) return;
-
-      item.qty += delta;
-      if (item.qty <= 0) {
-        cart = cart.filter(i => i.id !== productId);
-      }
-      saveCart();
-      updateCartUI();
-    }
-
-    function removeCartItem(productId) {
-      cart = cart.filter(i => i.id !== productId);
-      saveCart();
-      updateCartUI();
-    }
-
-    function saveCart() {
-      try {
-        localStorage.setItem('lychee_cart', JSON.stringify(cart));
-      } catch(e) {}
-    }
-
-    function updateCartUI() {
-      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-      const badge = document.getElementById('cartBadgeCount');
-      if (badge) badge.textContent = totalCount;
-
-      const listEl = document.getElementById('cartItemsList');
-      const totalEl = document.getElementById('cartTotalVal');
-
-      let totalPrice = 0;
-      if (cart.length === 0) {
-        listEl.innerHTML = `
-          <div class="cart-empty-state">
-            <div class="cart-empty-icon">🛒</div>
-            <div style="font-size: 16px; font-weight: 700; color: #fff;">Your cart is empty</div>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Add keys, shards, or ranks to get started.</p>
-          </div>
-        `;
-      } else {
-        listEl.innerHTML = cart.map(item => {
-          const itemTotal = item.price * item.qty;
-          totalPrice += itemTotal;
-          return `
-            <div class="cart-item">
-              <img src="${item.img}" alt="${item.name}" class="cart-item-img">
-              <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">₹${item.price} each</div>
-                <div class="cart-item-actions">
-                  <button class="qty-btn" onclick="updateCartQty('${item.id}', -1)">-</button>
-                  <span class="cart-item-qty">${item.qty}</span>
-                  <button class="qty-btn" onclick="updateCartQty('${item.id}', 1)">+</button>
-                </div>
-              </div>
-              <div style="text-align: right;">
-                <div style="font-family: var(--font-mono); font-weight: 800; color: #fff;">₹${itemTotal}</div>
-                <button class="btn-remove-item" onclick="removeCartItem('${item.id}')" title="Remove">&times;</button>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      if (totalEl) totalEl.textContent = '₹' + totalPrice;
-    }
-
-    function toggleCart() {
-      const overlay = document.getElementById('cartOverlay');
-      overlay.classList.toggle('open');
-    }
-
-    function closeCartOnOverlay(e) {
-      if (e.target.id === 'cartOverlay') {
-        toggleCart();
-      }
-    }
-
-    // --- 6. DEDICATED PAYMENT WINDOW LOGIC ---
-    function openPaymentWindow() {
-      if (cart.length === 0) {
-        showToast('Your cart is empty! Please add an item first.');
-        return;
-      }
-
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      document.getElementById('payModalTotalAmount').textContent = '₹' + total;
-      document.getElementById('btnSubmitPayment').innerHTML = `<span>Pay &amp; Connect to In-Game (₹${total})</span> ➔`;
-
-      // Pre-fill IGN if already set
-      const ignInput = document.getElementById('payIgnInput');
-      if (playerIGN) {
-        ignInput.value = playerIGN;
-        updatePaymentAvatar(playerIGN);
-      } else {
-        updatePaymentAvatar('Steve');
-      }
-
-      // Close cart drawer & open payment window
-      const cartOverlay = document.getElementById('cartOverlay');
-      cartOverlay.classList.remove('open');
-
-      const payOverlay = document.getElementById('paymentModalOverlay');
-      payOverlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePaymentWindow() {
-      const payOverlay = document.getElementById('paymentModalOverlay');
-      payOverlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function closePayModalOnOverlay(e) {
-      if (e.target.id === 'paymentModalOverlay') {
-        closePaymentWindow();
-      }
-    }
-
-    // Switch between Java Edition and Bedrock Edition
-    function selectEdition(ed) {
-      selectedEdition = ed;
-      const btnJava = document.getElementById('btnJava');
-      const btnBedrock = document.getElementById('btnBedrock');
-      if (ed === 'java') {
-        btnJava.classList.add('active');
-        btnBedrock.classList.remove('active');
-      } else {
-        btnBedrock.classList.add('active');
-        btnJava.classList.remove('active');
-      }
-      updateInGameSyncDisplay();
-    }
-
-    function updatePaymentAvatar(ign) {
-      const clean = ign.trim();
-      const avatarEl = document.getElementById('payAvatarPreview');
-      const target = clean || 'Steve';
-      avatarEl.src = `https://mc-heads.net/avatar/${encodeURIComponent(target)}/24`;
-      updateInGameSyncDisplay();
-    }
-
-    function updateInGameSyncDisplay() {
-      const ign = document.getElementById('payIgnInput').value.trim() || playerIGN || 'Guest';
-      const edLabel = selectedEdition === 'java' ? 'Java Edition' : 'Bedrock / PE';
-      document.getElementById('connectedPlayerDisplay').textContent = `${ign} (${edLabel})`;
-    }
-
-    // Switch between UPI and Card details
-    function switchPayMethod(method) {
-      currentPayMethod = method;
-      const tabUpi = document.getElementById('tabUpiBtn');
-      const tabCard = document.getElementById('tabCardBtn');
-      const upiContent = document.getElementById('upiFormContent');
-      const cardContent = document.getElementById('cardFormContent');
-
-      if (method === 'upi') {
-        tabUpi.classList.add('active');
-        tabCard.classList.remove('active');
-        upiContent.style.display = 'flex';
-        cardContent.style.display = 'none';
-      } else {
-        tabCard.classList.add('active');
-        tabUpi.classList.remove('active');
-        upiContent.style.display = 'none';
-        cardContent.style.display = 'flex';
-      }
-    }
-
-    function appendUpiHandle(handle) {
-      const input = document.getElementById('payUpiId');
-      const val = input.value.split('@')[0].trim() || 'player';
-      input.value = val + handle;
-      input.focus();
-    }
-
-    function formatCardNumber(input) {
-      let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-      let matches = v.match(/\d{4,16}/g);
-      let match = matches && matches[0] || '';
-      let parts = [];
-      for (let i = 0, len = match.length; i < len; i += 4) {
-        parts.push(match.substring(i, i + 4));
-      }
-      if (parts.length) {
-        input.value = parts.join(' ');
-      } else {
-        input.value = v;
-      }
-    }
-
-    // Process Payment & Connect to In-game
-    function processPayment() {
-      const ign = document.getElementById('payIgnInput').value.trim();
-      const email = document.getElementById('payGmailInput').value.trim();
-
-      if (!ign) {
-        alert('Please enter your Minecraft in-game username (IGN) to connect your account.');
-        document.getElementById('payIgnInput').focus();
-        return;
-      }
-
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid Gmail address to receive your payment confirmation and claim receipt.');
-        document.getElementById('payGmailInput').focus();
-        return;
-      }
-
-      if (currentPayMethod === 'upi') {
-        const upi = document.getElementById('payUpiId').value.trim();
-        if (!upi || !upi.includes('@')) {
-          alert('Please enter your UPI ID (e.g. yourname@okhdfcbank).');
-          document.getElementById('payUpiId').focus();
-          return;
-        }
-      } else {
-        const cardNum = document.getElementById('cardNumber').value.trim();
-        if (!cardNum || cardNum.length < 12) {
-          alert('Please enter a valid Card Number.');
-          document.getElementById('cardNumber').focus();
-          return;
-        }
-      }
-
-      // Save player IGN
-      playerIGN = ign;
-      localStorage.setItem('lychee_ign', playerIGN);
-      updatePlayerUI();
-
-      // Show processing state
-      const btn = document.getElementById('btnSubmitPayment');
-      const origText = btn.innerHTML;
-      btn.classList.add('loading');
-      btn.innerHTML = `<span>Connecting to LycheeMC Bot &amp; Server...</span> ⏳`;
-
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const txnId = 'LM-' + (currentPayMethod === 'upi' ? 'UPI' : 'CARD') + '-' + Math.floor(100000 + Math.random() * 900000);
-      const edLabel = selectedEdition === 'java' ? 'Java Edition' : 'Bedrock Edition';
-
-      const orderPayload = {
-        ign: playerIGN,
-        email,
-        items: [...cart],
-        total,
-        txnId,
-        method: currentPayMethod === 'upi' ? 'UPI' : 'Card',
-        platform: edLabel
-      };
-
-      // Send order to Discord Bot RCON Dispatcher
-      const deliverPromise = fetch('http://localhost:4000/api/store-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderPayload)
-      }).catch(err => {
-        console.log('[Store Webhook Note]: Bot server not reached locally; proceeding with verified order receipt.');
-      });
-
-      setTimeout(async () => {
-        try { await Promise.race([deliverPromise, new Promise(r => setTimeout(r, 1200))]); } catch(e) {}
-
-        btn.classList.remove('loading');
-        btn.innerHTML = origText;
-
-        // Fill Success Modal details
-        document.getElementById('successPlayerIgn').textContent = playerIGN;
-        document.getElementById('successPlatformServer').textContent = `${edLabel} • play.lycheemc.fun`;
-        document.getElementById('successPlayerAvatar').src = `https://mc-heads.net/avatar/${encodeURIComponent(playerIGN)}/48`;
-        document.getElementById('successGmail').textContent = email;
-        document.getElementById('successMethod').textContent = currentPayMethod === 'upi' ? 'UPI / GPay / QR' : 'Credit / Debit Card';
-        document.getElementById('successTxnId').textContent = txnId;
-        document.getElementById('successTotal').textContent = '₹' + total;
-
-        // Clear Cart
-        cart = [];
-        saveCart();
-        updateCartUI();
-
-        // Close Payment Window & Open Success Modal
-        closePaymentWindow();
-        document.getElementById('successModal').classList.add('open');
-      }, 1400);
-    }
-
-    function closeSuccessModal() {
-      document.getElementById('successModal').classList.remove('open');
-    }
-
-    // --- 7. PLAYER PROFILE & IP COPY ---
-    function promptIGN() {
-      const name = prompt('Enter your Minecraft In-Game Name (IGN):', playerIGN || '');
-      if (name !== null && name.trim() !== '') {
-        playerIGN = name.trim();
-        localStorage.setItem('lychee_ign', playerIGN);
-        updatePlayerUI();
-        showToast(`Profile updated to <strong>${playerIGN}</strong>!`);
-      }
-    }
-
-    function updatePlayerUI() {
-      const ign = playerIGN || 'Guest';
-      const navIGN = document.getElementById('navIGN');
-      const navAvatar = document.getElementById('navAvatar');
-
-      if (navIGN) navIGN.textContent = ign;
-      const avatarUrl = playerIGN 
-        ? `https://mc-heads.net/avatar/${encodeURIComponent(playerIGN)}/26`
-        : 'https://mc-heads.net/avatar/Steve/26';
-
-      if (navAvatar) navAvatar.src = avatarUrl;
-    }
-
-    function copyServerIP() {
-      const ip = 'play.lycheemc.fun';
-      navigator.clipboard.writeText(ip).then(() => {
-        const badge = document.getElementById('ipCopyBadge');
-        if (badge) {
-          badge.textContent = 'Copied!';
-          badge.style.background = '#10b981';
-          badge.style.color = '#fff';
-          setTimeout(() => {
-            badge.textContent = 'Copy';
-            badge.style.background = '';
-            badge.style.color = '';
-          }, 2000);
-        }
-        showToast('Server IP <strong>play.lycheemc.fun</strong> copied to clipboard!');
-      }).catch(() => {
-        prompt('Copy server address:', ip);
-      });
-    }
-
-    function showToast(html) {
-      const box = document.getElementById('toastBox');
-      if (!box) return;
-
-      const toast = document.createElement('div');
-      toast.className = 'toast-msg';
-      toast.innerHTML = `<span>✨</span> <div>${html}</div>`;
-      box.appendChild(toast);
-
-      setTimeout(() => {
-        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(10px)';
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
-
-    window.addEventListener('scroll', () => {
-      const hdr = document.getElementById('siteHeader');
-      if (window.scrollY > 20) {
-        hdr.classList.add('scrolled');
-      } else {
-        hdr.classList.remove('scrolled');
-      }
-    });
-
-    // Initialize
-    window.addEventListener('DOMContentLoaded', () => {
-      updatePlayerUI();
-      updateCartUI();
-    });
-  </script>
+  <script src="index.js"></script>
 
 </body>
 </html>
