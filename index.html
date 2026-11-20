@@ -2503,21 +2503,35 @@
       if (e.target && e.target.tagName === 'IMG') resolve(e.target);
     }, true);
 
-    // 2) re-check images the popup builds later, in case one already failed
+    // 2) images that index.js builds later (popup cards): fix them as soon as they appear
+    function watch(img) {
+      if (img.dataset.lmWatched === '1') return;
+      img.dataset.lmWatched = '1';
+      img.addEventListener('error', function () { resolve(img); });
+      if (img.complete && img.naturalWidth === 0) resolve(img);
+    }
     function sweep(root) {
-      (root.querySelectorAll ? root.querySelectorAll('img') : []).forEach(function (img) {
-        if (img.complete && img.naturalWidth === 0) resolve(img);
-      });
+      var list = root.tagName === 'IMG' ? [root] : (root.querySelectorAll ? root.querySelectorAll('img') : []);
+      Array.prototype.forEach.call(list, watch);
     }
     new MutationObserver(function (muts) {
       muts.forEach(function (m) {
-        m.addedNodes.forEach(function (n) {
-          if (n.nodeType !== 1) return;
-          if (n.tagName === 'IMG') { setTimeout(function () { if (n.complete && n.naturalWidth === 0) resolve(n); }, 50); }
-          else sweep(n);
-        });
+        m.addedNodes.forEach(function (n) { if (n.nodeType === 1) sweep(n); });
       });
     }).observe(document.documentElement, { childList: true, subtree: true });
+
+    // 3) safety net: re-check the whole page for a few seconds, and when a popup opens
+    var runs = 0, t = setInterval(function () {
+      sweep(document.body);
+      Array.prototype.forEach.call(document.querySelectorAll('img'), function (img) {
+        if (img.complete && img.naturalWidth === 0) resolve(img);
+      });
+      if (++runs > 40) clearInterval(t);
+    }, 500);
+    document.addEventListener('click', function () {
+      setTimeout(function () { sweep(document.body); }, 150);
+      setTimeout(function () { sweep(document.body); }, 800);
+    }, true);
   })();
   </script>
 
