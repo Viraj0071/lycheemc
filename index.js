@@ -6,746 +6,873 @@
 // alerts directly when hosted online on GitHub Pages (e.g. into your #store-logs channel)
 const DISCORD_WEBHOOK_URL = '';
 
-// --- 1. PRODUCT CATALOG DATA ---
-    const RANKS = [
-      {
-        id: 'rank-premium',
-        name: 'PREMIUM Rank',
-        priceNum: 49,
-        priceDisplay: '₹49',
-        category: 'ranks',
-        glowColor: '#3b82f6',
-        img: 'public/images/ranks/premium.png',
-        desc: 'Permanent starter rank with essential VIP commands, chat color, and bonus claim blocks.',
-        perks: ['3 Set Homes', '/hat command', 'White & Blue Chat Glow', 'Premium Kit every 24h', 'Queue Priority Tier 1']
-      },
-      {
-        id: 'rank-ocean',
-        name: 'OCEAN Rank',
-        priceNum: 99,
-        priceDisplay: '₹99',
-        category: 'ranks',
-        glowColor: '#00e5ff',
-        img: 'public/images/ranks/ocean.png',
-        desc: 'Ocean master rank with water breathing perks, extra homes, and crate bonus keys.',
-        perks: ['5 Set Homes', '/feed command', 'Ocean Blue Chat Glow', 'Ocean Kit + 1x Matrix Key', 'Permanent Water Breathing']
-      },
-      {
-        id: 'rank-coconut',
-        name: 'COCONUT Rank',
-        priceNum: 149,
-        priceDisplay: '₹149',
-        category: 'ranks',
-        glowColor: '#84cc16',
-        img: 'public/images/ranks/coconut.png',
-        desc: 'Tropical champion rank with portable crafting, bonus homes, and double claim rate.',
-        perks: ['7 Set Homes', '/workbench command', 'Coconut Vine Chat Glow', 'Coconut Armor Kit + 2x Matrix Keys', 'Keep XP on Death (50%)']
-      },
-      {
-        id: 'rank-turtle',
-        name: 'TURTLE Rank',
-        priceNum: 199,
-        priceDisplay: '₹199',
-        category: 'ranks',
-        glowColor: '#10b981',
-        img: 'public/images/ranks/turtle.png',
-        desc: 'Heavy shell combat tier with Diamond Prot III armor kit, near command, and Arcane key.',
-        perks: ['10 Set Homes', '/near radar command', 'Emerald Turtle Chat Glow', 'Turtle God Kit + 1x Arcane Key', 'Death Chest Protection']
-      },
-      {
-        id: 'rank-lychee-plus',
-        name: 'LYCHEE+ Apex Rank',
-        priceNum: 249,
-        priceDisplay: '₹249',
-        category: 'ranks',
-        glowColor: '#f43f5e',
-        img: 'public/images/ranks/lychee-plus.png',
-        desc: 'The ultimate royal apex rank. Flight in claims, full Prot IV Netherite kit, and Monthly key.',
-        perks: ['15 Set Homes', '/fly command inside claims', 'Crimson & Gold Royal Glow', 'Lychee+ God Kit + 1x Monthly Key', 'Full Keep Inventory perk']
-      }
-    ];
+// --- 0. MULTI-CURRENCY CONVERSION & TRANSLATOR ENGINE ---
+const CURRENCIES = {
+  INR: { code: 'INR', symbol: '₹', rate: 1.0, flag: '🇮🇳', name: 'Indian Rupee' },
+  USD: { code: 'USD', symbol: '$', rate: 0.012, flag: '🇺🇸', name: 'US Dollar' },
+  EUR: { code: 'EUR', symbol: '€', rate: 0.011, flag: '🇪🇺', name: 'Euro' },
+  GBP: { code: 'GBP', symbol: '£', rate: 0.0095, flag: '🇬🇧', name: 'British Pound' },
+  AED: { code: 'AED', symbol: 'AED ', rate: 0.044, flag: '🇦🇪', name: 'UAE Dirham' },
+  CAD: { code: 'CAD', symbol: 'C$', rate: 0.016, flag: '🇨🇦', name: 'Canadian Dollar' }
+};
 
-    const KEYS = [
-      {
-        id: 'key-matrix',
-        name: 'Matrix Key ×3',
-        priceNum: 99,
-        priceDisplay: '₹99',
-        category: 'keys',
-        reward: '250 Shards for 3x',
-        glowColor: '#a855f7',
-        img: 'public/images/keys/matrix-key.png',
-        desc: 'Pack of 3 mysterious purple Matrix keys. Grants rare enchantments, vital resources, and 250 shards in-game.'
-      },
-      {
-        id: 'key-arcane',
-        name: 'Arcane Key ×3',
-        priceNum: 149,
-        priceDisplay: '₹149',
-        category: 'keys',
-        reward: '500 Shards for 3x',
-        glowColor: '#00e5ff',
-        img: 'public/images/keys/arcane-key.png',
-        desc: 'Pack of 3 magical cyan Arcane keys. Unlocks mythical tools, high-tier armor, and 500 shards bonus.'
-      },
-      {
-        id: 'key-monthly',
-        name: 'Monthly Key ×3',
-        priceNum: 199,
-        priceDisplay: '₹199',
-        category: 'keys',
-        reward: '1500 Shards for 3x',
-        glowColor: '#ffb300',
-        img: 'public/images/keys/monthly-key.png',
-        desc: 'Pack of 3 golden premium Monthly keys. Exclusive monthly cosmetics, seasonal gear, and 1500 shards bonus.'
-      }
-    ];
+let currentCurrency = localStorage.getItem('lycheemc_currency') || 'INR';
 
-    const SHARDS = [
-      {
-        id: 'shards-1k',
-        name: '1,000 Shards',
-        priceNum: 49,
-        priceDisplay: '₹49',
-        category: 'shards',
-        glowColor: '#00e5ff',
-        img: 'public/images/shards/1k-shards.png',
-        desc: 'Starter gemstone cluster to kick off server trading, shop unlocks, and beginner upgrades.'
-      },
-      {
-        id: 'shards-3k',
-        name: '3,000 Shards',
-        priceNum: 129,
-        priceDisplay: '₹129',
-        category: 'shards',
-        glowColor: '#00e5ff',
-        img: 'public/images/shards/3k-shards.png',
-        desc: 'Medium adventurer crystal cluster. Ideal for intermediate kits and weapon enchants.'
-      },
-      {
-        id: 'shards-5k',
-        name: '5,000 Shards',
-        priceNum: 159,
-        priceDisplay: '₹159',
-        category: 'shards',
-        glowColor: '#00e5ff',
-        img: 'public/images/shards/5k-shards.png',
-        desc: 'Hero crystal formation. Most popular server economy booster for serious faction leaders.'
-      },
-      {
-        id: 'shards-10k',
-        name: '10,000 Shards',
-        priceNum: 219,
-        priceDisplay: '₹219',
-        category: 'shards',
-        glowColor: '#ffb300',
-        highlight: true,
-        img: 'public/images/shards/10k-shards.png',
-        desc: 'Huge premium treasure chest overflowing with glowing crystals. Maximum value pack with best rate per shard!'
-      }
-    ];
+function formatPrice(inrAmount) {
+  const curr = CURRENCIES[currentCurrency] || CURRENCIES.INR;
+  if (curr.code === 'INR') {
+    return '₹' + inrAmount;
+  }
+  const converted = (inrAmount * curr.rate).toFixed(2);
+  return curr.symbol + converted;
+}
 
-    const ALL_PRODUCTS = [...RANKS, ...KEYS, ...SHARDS];
+function toggleCurrencyDropdown() {
+  const wrap = document.getElementById('currencyDropdownWrap');
+  if (wrap) wrap.classList.toggle('open');
+}
 
-    const POPUP_CONFIGS = {
-      ranks: {
-        title: '👑 Permanent Server Ranks',
-        subtitle: 'Select your preferred rank tier with lifetime perks, kits, and chat glows',
-        glow: 'rgba(59, 130, 246, 0.4)',
-        items: RANKS
-      },
-      keys: {
-        title: '🗝️ Crate Key Bundles',
-        subtitle: 'Pack of 3 crate keys with special shard rewards and rare loot drops',
-        glow: 'rgba(168, 85, 247, 0.4)',
-        items: KEYS
-      },
-      shards: {
-        title: '💎 Lychee Shards Packages',
-        subtitle: 'Premium server gemstone packs and crystal vaults for trading and upgrades',
-        glow: 'rgba(0, 229, 255, 0.4)',
-        items: SHARDS
-      }
-    };
+function closeCurrencyDropdown() {
+  const wrap = document.getElementById('currencyDropdownWrap');
+  if (wrap) wrap.classList.remove('open');
+}
 
-    // --- 2. STATE ---
-    let cart = [];
-    let playerIGN = localStorage.getItem('lychee_ign') || '';
-    let selectedEdition = 'java';
-    let currentPayMethod = 'upi';
+function selectCurrency(code) {
+  if (!CURRENCIES[code]) return;
+  currentCurrency = code;
+  localStorage.setItem('lycheemc_currency', code);
+  updateCurrencyUI();
+  refreshPricesOnPage();
+  closeCurrencyDropdown();
+  showToast(`Currency updated to ${CURRENCIES[code].name} (${CURRENCIES[code].symbol.trim()})`);
+}
 
-    try {
-      const savedCart = localStorage.getItem('lychee_cart');
-      if (savedCart) cart = JSON.parse(savedCart);
-    } catch(e) {}
+function updateCurrencyUI() {
+  const curr = CURRENCIES[currentCurrency] || CURRENCIES.INR;
+  const flagEl = document.getElementById('currSelectedFlag');
+  const codeEl = document.getElementById('currSelectedCode');
+  const symbolEl = document.getElementById('currSelectedSymbol');
 
-    // --- 3. CATEGORY POPUPS ---
-    function openCategoryPopup(categoryKey) {
-      const config = POPUP_CONFIGS[categoryKey];
-      if (!config) return;
+  if (flagEl) flagEl.textContent = curr.flag;
+  if (codeEl) codeEl.textContent = curr.code;
+  if (symbolEl) symbolEl.textContent = `(${curr.symbol.trim()})`;
 
-      const overlay = document.getElementById('categoryPopupOverlay');
-      const win = document.getElementById('categoryPopupWindow');
-      const titleEl = document.getElementById('popupWindowTitle');
-      const subEl = document.getElementById('popupWindowSub');
-      const grid = document.getElementById('popupProductsGrid');
+  document.querySelectorAll('.currency-opt').forEach(opt => {
+    if (opt.getAttribute('data-curr') === currentCurrency) {
+      opt.classList.add('active');
+    } else {
+      opt.classList.remove('active');
+    }
+  });
+}
 
-      win.style.setProperty('--window-glow', config.glow);
-      titleEl.innerHTML = config.title;
-      subEl.textContent = config.subtitle;
-
+function refreshPricesOnPage() {
+  // Re-render open popup if open
+  if (currentOpenCategory) {
+    const config = POPUP_CONFIGS[currentOpenCategory];
+    const grid = document.getElementById('popupProductsGrid');
+    if (config && grid) {
       grid.innerHTML = config.items.map(p => createCardHTML(p)).join('');
-
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
     }
+  }
 
-    function closeCategoryPopup() {
-      const overlay = document.getElementById('categoryPopupOverlay');
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
+  // Update portal card subtitle descriptions
+  const ranksPortalSub = document.querySelector('.portal-ranks .portal-desc');
+  if (ranksPortalSub) {
+    ranksPortalSub.textContent = `Unlock lifetime perks, kits, chat glows, commands, and extra set homes starting from ${formatPrice(49)}.`;
+  }
+
+  // Update cart UI
+  updateCartUI();
+
+  // Update payment modal if open
+  const payOverlay = document.getElementById('paymentModalOverlay');
+  if (payOverlay && payOverlay.classList.contains('open')) {
+    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const payTotalEl = document.getElementById('payModalTotalAmount');
+    if (payTotalEl) {
+      payTotalEl.textContent = currentCurrency === 'INR' ? `₹${total}` : `${formatPrice(total)} (~ ₹${total} INR)`;
     }
-
-    function closePopupOnOverlay(e) {
-      if (e.target.id === 'categoryPopupOverlay') {
-        closeCategoryPopup();
-      }
+    const btnSubmit = document.getElementById('btnSubmitPayment');
+    if (btnSubmit) {
+      btnSubmit.innerHTML = `<span>Pay &amp; Connect to In-Game (${formatPrice(total)})</span> ➔`;
     }
+  }
+}
 
-    // Escape listener
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeCategoryPopup();
-        closePaymentWindow();
-        closeSuccessModal();
-        const cartOverlay = document.getElementById('cartOverlay');
-        if (cartOverlay.classList.contains('open')) toggleCart();
-      }
+// Helper to reliably resolve base64 or local image
+function getProductImg(p) {
+  if (typeof window !== 'undefined' && window.LM_IMGS && p.assetKey && window.LM_IMGS[p.assetKey]) {
+    return window.LM_IMGS[p.assetKey];
+  }
+  return p.img || (window.LM_IMGS && window.LM_IMGS['logo.png']) || 'public/images/logo.png';
+}
+
+// --- 1. PRODUCT CATALOG DATA ---
+const RANKS = [
+  {
+    id: 'rank-premium',
+    name: 'PREMIUM Rank',
+    priceNum: 49,
+    priceDisplay: '₹49',
+    category: 'ranks',
+    glowColor: '#3b82f6',
+    img: 'public/images/ranks/premium.png',
+    assetKey: 'ranks/premium.png',
+    desc: 'Permanent starter rank with essential VIP commands, chat color, and bonus claim blocks.',
+    perks: ['3 Set Homes', '/hat command', 'White & Blue Chat Glow', 'Premium Kit every 24h', 'Queue Priority Tier 1']
+  },
+  {
+    id: 'rank-ocean',
+    name: 'OCEAN Rank',
+    priceNum: 99,
+    priceDisplay: '₹99',
+    category: 'ranks',
+    glowColor: '#00e5ff',
+    img: 'public/images/ranks/ocean.png',
+    assetKey: 'ranks/ocean.png',
+    desc: 'Ocean master rank with water breathing perks, extra homes, and crate bonus keys.',
+    perks: ['5 Set Homes', '/feed command', 'Ocean Blue Chat Glow', 'Ocean Kit + 1x Matrix Key', 'Permanent Water Breathing']
+  },
+  {
+    id: 'rank-coconut',
+    name: 'COCONUT Rank',
+    priceNum: 149,
+    priceDisplay: '₹149',
+    category: 'ranks',
+    glowColor: '#84cc16',
+    img: 'public/images/ranks/coconut.png',
+    assetKey: 'ranks/coconut.png',
+    desc: 'Tropical champion rank with portable crafting, bonus homes, and double claim rate.',
+    perks: ['7 Set Homes', '/workbench command', 'Coconut Vine Chat Glow', 'Coconut Armor Kit + 2x Matrix Keys', 'Keep XP on Death (50%)']
+  },
+  {
+    id: 'rank-turtle',
+    name: 'TURTLE Rank',
+    priceNum: 199,
+    priceDisplay: '₹199',
+    category: 'ranks',
+    glowColor: '#10b981',
+    img: 'public/images/ranks/turtle.png',
+    assetKey: 'ranks/turtle.png',
+    desc: 'Heavy shell combat tier with Diamond Prot III armor kit, near command, and Arcane key.',
+    perks: ['10 Set Homes', '/near radar command', 'Emerald Turtle Chat Glow', 'Turtle God Kit + 1x Arcane Key', 'Death Chest Protection']
+  },
+  {
+    id: 'rank-lychee-plus',
+    name: 'LYCHEE+ Apex Rank',
+    priceNum: 249,
+    priceDisplay: '₹249',
+    category: 'ranks',
+    glowColor: '#f43f5e',
+    img: 'public/images/ranks/lychee-plus.png',
+    assetKey: 'ranks/lychee-plus.png',
+    highlight: true,
+    desc: 'The ultimate royal apex rank. Flight in claims, full Prot IV Netherite kit, and Monthly key.',
+    perks: ['15 Set Homes', '/fly command inside claims', 'Crimson & Gold Royal Glow', 'Lychee+ God Kit + 1x Monthly Key', 'Full Keep Inventory perk']
+  }
+];
+
+const KEYS = [
+  {
+    id: 'key-matrix',
+    name: 'Matrix Crate Key',
+    priceNum: 49,
+    priceDisplay: '₹49',
+    category: 'keys',
+    glowColor: '#00e5ff',
+    img: 'public/images/keys/matrix-key.png',
+    assetKey: 'keys/matrix-key.png',
+    reward: '1x Key + 250 Shards',
+    desc: 'High-tech mystery crate key unlocking enchanted gear, cosmetic tags, and currency rewards.',
+    perks: ['1x Matrix Crate Key', 'Guaranteed +250 Bonus Shards', 'Unlocks Cyber Gear & Glow Tags', 'Instant Delivery to Inventory']
+  },
+  {
+    id: 'key-arcane',
+    name: 'Arcane Crate Key',
+    priceNum: 99,
+    priceDisplay: '₹99',
+    category: 'keys',
+    glowColor: '#a855f7',
+    img: 'public/images/keys/arcane-key.png',
+    assetKey: 'keys/arcane-key.png',
+    reward: '2x Keys + 600 Shards',
+    desc: 'Ancient spellbound crate unlocking mystic artifacts, rare weapons, and boost scrolls.',
+    perks: ['2x Arcane Crate Keys', 'Guaranteed +600 Bonus Shards', 'Unlocks Mystic Weapons & Scrolls', 'Instant Delivery to Inventory']
+  },
+  {
+    id: 'key-monthly',
+    name: 'Monthly Crate Key',
+    priceNum: 199,
+    priceDisplay: '₹199',
+    category: 'keys',
+    glowColor: '#ffb300',
+    img: 'public/images/keys/monthly-key.png',
+    assetKey: 'keys/monthly-key.png',
+    highlight: true,
+    reward: '3x Keys + 1,500 Shards',
+    desc: 'Exclusive monthly crate unlocking legendary limited-edition tools, armor, and massive shards.',
+    perks: ['3x Monthly Crate Keys', 'Guaranteed +1,500 Bonus Shards', 'Unlocks Limited Edition Armor & Tools', 'Instant Delivery to Inventory']
+  }
+];
+
+const SHARDS = [
+  {
+    id: 'shards-1k',
+    name: '1,000 Shards Pack',
+    priceNum: 49,
+    priceDisplay: '₹49',
+    category: 'shards',
+    glowColor: '#38bdf8',
+    img: 'public/images/shards/1k-shards.png',
+    assetKey: 'shards/1k-shards.png',
+    reward: '+50 Bonus Shards',
+    desc: 'Starter gemstone bundle for auction purchases, trade market deals, and claim expansion.',
+    perks: ['1,000 Lychee Shards', '+50 Free Bonus Shards', 'Trade Market Currency', 'Direct In-Game Credit']
+  },
+  {
+    id: 'shards-3k',
+    name: '3,000 Shards Pack',
+    priceNum: 129,
+    priceDisplay: '₹129',
+    category: 'shards',
+    glowColor: '#818cf8',
+    img: 'public/images/shards/3k-shards.png',
+    assetKey: 'shards/3k-shards.png',
+    reward: '+200 Bonus Shards',
+    desc: 'Popular gemstone bundle for buying rare player market goods and unlocking upgrades.',
+    perks: ['3,000 Lychee Shards', '+200 Free Bonus Shards', 'Auction House Ready', 'Direct In-Game Credit']
+  },
+  {
+    id: 'shards-5k',
+    name: '5,000 Shards Pack',
+    priceNum: 199,
+    priceDisplay: '₹199',
+    category: 'shards',
+    glowColor: '#c084fc',
+    img: 'public/images/shards/5k-shards.png',
+    assetKey: 'shards/5k-shards.png',
+    reward: '+500 Bonus Shards',
+    desc: 'Generous treasure pack for serious builders and faction leaders wanting quick progression.',
+    perks: ['5,000 Lychee Shards', '+500 Free Bonus Shards', 'Economy Booster', 'Direct In-Game Credit']
+  },
+  {
+    id: 'shards-10k',
+    name: '10,000 Shards Chest',
+    priceNum: 349,
+    priceDisplay: '₹349',
+    category: 'shards',
+    glowColor: '#f43f5e',
+    img: 'public/images/shards/10k-shards.png',
+    assetKey: 'shards/10k-shards.png',
+    highlight: true,
+    reward: '+1,500 Bonus Shards',
+    desc: 'The ultimate royal vault of gemstones with maximum value and complimentary bonus shards.',
+    perks: ['10,000 Lychee Shards', '+1,500 Free Bonus Shards', 'Maximum Value Vault', 'Direct In-Game Credit']
+  }
+];
+
+const ALL_PRODUCTS = [...RANKS, ...KEYS, ...SHARDS];
+
+// --- 2. DEDICATED POPUP CONFIGURATIONS ---
+const POPUP_CONFIGS = {
+  ranks: {
+    title: '👑 Permanent Server Ranks',
+    subtitle: 'Select your preferred rank tier with lifetime perks, kits, and chat glows',
+    glow: 'rgba(244, 63, 94, 0.45)',
+    items: RANKS
+  },
+  keys: {
+    title: '🗝️ Pixel-Art Crate Keys',
+    subtitle: 'Unlock Matrix, Arcane, and exclusive Monthly crates for rare loot',
+    glow: 'rgba(168, 85, 247, 0.45)',
+    items: KEYS
+  },
+  shards: {
+    title: '💎 Official Lychee Shards',
+    subtitle: 'Premium server gemstones for auction bids, claim extensions, and player trades',
+    glow: 'rgba(0, 229, 255, 0.45)',
+    items: SHARDS
+  }
+};
+
+let currentOpenCategory = null;
+
+// --- 3. POPUP WINDOW CONTROLLER ---
+function openCategoryPopup(categoryKey) {
+  const config = POPUP_CONFIGS[categoryKey];
+  if (!config) return;
+
+  currentOpenCategory = categoryKey;
+  const overlay = document.getElementById('categoryPopupOverlay');
+  const win = document.getElementById('categoryPopupWindow');
+  const titleEl = document.getElementById('popupWindowTitle');
+  const subEl = document.getElementById('popupWindowSub');
+  const grid = document.getElementById('popupProductsGrid');
+
+  win.style.setProperty('--window-glow', config.glow);
+  titleEl.innerHTML = config.title;
+  subEl.textContent = config.subtitle;
+
+  grid.innerHTML = config.items.map(p => createCardHTML(p)).join('');
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCategoryPopup() {
+  const overlay = document.getElementById('categoryPopupOverlay');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  currentOpenCategory = null;
+}
+
+function closePopupOnOverlay(e) {
+  if (e.target && e.target.id === 'categoryPopupOverlay') {
+    closeCategoryPopup();
+  }
+}
+
+// --- 4. PRODUCT CARD RENDERER ---
+function createCardHTML(p) {
+  const isHighlight = p.highlight ? 'highlight-card' : '';
+  const tagHTML = p.highlight 
+    ? `<span class="product-tag tag-best-value">🔥 Best Value</span>`
+    : (p.reward ? `<span class="product-tag tag-reward">${p.reward}</span>` : '');
+
+  const perksHTML = p.perks 
+    ? `<ul class="product-perks-list">${p.perks.map(perk => `<li>${perk}</li>`).join('')}</ul>`
+    : '';
+
+  const imgSrc = getProductImg(p);
+  const formattedPrice = formatPrice(p.priceNum);
+
+  return `
+    <article class="product-card ${isHighlight}" style="--card-glow-color: ${p.glowColor}40;" data-id="${p.id}">
+      <div class="product-img-box">
+        ${tagHTML}
+        <img src="${imgSrc}" alt="${p.name}" class="product-img" onerror="window.resolveLMImage ? window.resolveLMImage(this, '${p.assetKey || p.id}') : null">
+      </div>
+      <div class="product-info">
+        <span class="product-category-label">${p.category}</span>
+        <h3 class="product-title">${p.name}</h3>
+        <p class="product-desc">${p.desc}</p>
+        ${perksHTML}
+        <div class="product-footer">
+          <div class="price-box">
+            <span class="price-label">Price</span>
+            <span class="price-val">${formattedPrice}</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('${p.id}', this)">
+            <span>Add to Cart</span> 🛒
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+// --- 5. CART LOGIC ---
+let cart = [];
+try {
+  const saved = localStorage.getItem('lycheemc_cart');
+  if (saved) cart = JSON.parse(saved);
+} catch (e) {
+  cart = [];
+}
+
+function addToCart(productId, btnEl) {
+  const product = ALL_PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  const existing = cart.find(i => i.id === productId);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.priceNum,
+      img: getProductImg(product),
+      qty: 1
     });
+  }
 
-    // --- 4. PRODUCT CARD RENDER ---
-    function createCardHTML(p) {
-      const isHighlight = p.highlight ? 'highlight-card' : '';
-      const tagHTML = p.highlight 
-        ? `<span class="product-tag tag-best-value">🔥 Best Value</span>`
-        : (p.reward ? `<span class="product-tag tag-reward">${p.reward}</span>` : '');
+  saveCart();
+  updateCartUI();
 
-      const perksHTML = p.perks 
-        ? `<ul class="product-perks-list">${p.perks.map(perk => `<li>${perk}</li>`).join('')}</ul>`
-        : '';
+  if (btnEl) {
+    const originalHTML = btnEl.innerHTML;
+    btnEl.innerHTML = `<span>Added!</span> ✓`;
+    btnEl.style.background = '#10b981';
+    btnEl.style.borderColor = '#10b981';
+    btnEl.style.color = '#fff';
+    setTimeout(() => {
+      btnEl.innerHTML = originalHTML;
+      btnEl.style.background = '';
+      btnEl.style.borderColor = '';
+      btnEl.style.color = '';
+    }, 1200);
+  }
 
+  showToast(`Added ${product.name} to cart!`);
+}
+
+function updateCartQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  item.qty += delta;
+  if (item.qty <= 0) {
+    cart = cart.filter(i => i.id !== id);
+  }
+
+  saveCart();
+  updateCartUI();
+}
+
+function removeCartItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  saveCart();
+  updateCartUI();
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem('lycheemc_cart', JSON.stringify(cart));
+  } catch (e) {}
+}
+
+function updateCartUI() {
+  const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const badge = document.getElementById('cartBadgeCount');
+  if (badge) badge.textContent = totalCount;
+
+  const listEl = document.getElementById('cartItemsList');
+  const totalEl = document.getElementById('cartTotalVal');
+
+  let totalPrice = 0;
+  if (cart.length === 0) {
+    listEl.innerHTML = `
+      <div class="cart-empty-state">
+        <div class="cart-empty-icon">🛒</div>
+        <div style="font-size: 16px; font-weight: 700; color: #fff;">Your cart is empty</div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Add keys, shards, or ranks to get started.</p>
+      </div>
+    `;
+  } else {
+    listEl.innerHTML = cart.map(item => {
+      const itemTotal = item.price * item.qty;
+      totalPrice += itemTotal;
       return `
-        <article class="product-card ${isHighlight}" style="--card-glow-color: ${p.glowColor}40;" data-id="${p.id}">
-          <div class="product-img-box">
-            ${tagHTML}
-            <img src="${p.img}" alt="${p.name}" class="product-img" onerror="this.onerror=null;this.src='public/images/logo.png'">
-          </div>
-          <div class="product-info">
-            <span class="product-category-label">${p.category}</span>
-            <h3 class="product-title">${p.name}</h3>
-            <p class="product-desc">${p.desc}</p>
-            ${perksHTML}
-            <div class="product-footer">
-              <div class="price-box">
-                <span class="price-label">Price</span>
-                <span class="price-val">${p.priceDisplay}</span>
-              </div>
-              <button class="btn-add-cart" onclick="addToCart('${p.id}', this)">
-                <span>Add to Cart</span> 🛒
-              </button>
+        <div class="cart-item">
+          <img src="${item.img}" alt="${item.name}" class="cart-item-img" onerror="window.resolveLMImage ? window.resolveLMImage(this, '${item.id}') : null">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${formatPrice(item.price)} each</div>
+            <div class="cart-item-actions">
+              <button class="qty-btn" onclick="updateCartQty('${item.id}', -1)">-</button>
+              <span class="cart-item-qty">${item.qty}</span>
+              <button class="qty-btn" onclick="updateCartQty('${item.id}', 1)">+</button>
             </div>
           </div>
-        </article>
+          <div style="text-align: right;">
+            <div style="font-family: var(--font-mono); font-weight: 800; color: #fff;">${formatPrice(itemTotal)}</div>
+            <button class="btn-remove-item" onclick="removeCartItem('${item.id}')" title="Remove">&times;</button>
+          </div>
+        </div>
       `;
+    }).join('');
+  }
+
+  if (totalEl) totalEl.textContent = formatPrice(totalPrice);
+}
+
+function toggleCart() {
+  const overlay = document.getElementById('cartOverlay');
+  overlay.classList.toggle('open');
+  if (overlay.classList.contains('open')) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+}
+
+function closeCartOnOverlay(e) {
+  if (e.target && e.target.id === 'cartOverlay') {
+    toggleCart();
+  }
+}
+
+// --- 6. CHECKOUT & PAYMENT MODAL ---
+let selectedEdition = 'java';
+let selectedPaymentMethod = 'upi';
+
+function openPaymentWindow() {
+  if (cart.length === 0) {
+    showToast('Your cart is empty! Please add an item first.');
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  
+  // Update price displays with multi-currency conversion
+  const payModalTotal = document.getElementById('payModalTotalAmount');
+  if (payModalTotal) {
+    payModalTotal.textContent = currentCurrency === 'INR' ? `₹${total}` : `${formatPrice(total)} (~ ₹${total} INR)`;
+  }
+  
+  const upiDisplay = document.getElementById('upiDisplayAmount');
+  if (upiDisplay) upiDisplay.textContent = '₹' + total;
+  
+  const btnSubmit = document.getElementById('btnSubmitPayment');
+  if (btnSubmit) {
+    btnSubmit.innerHTML = `<span>Pay &amp; Connect to In-Game (${formatPrice(total)})</span> ➔`;
+  }
+
+  // Clear previous inputs
+  const utrEl = document.getElementById('payUpiUtr');
+  if (utrEl) utrEl.value = '';
+
+  // Pre-fill IGN if already set
+  const ignInput = document.getElementById('payIgnInput');
+  if (playerIGN) {
+    ignInput.value = playerIGN;
+    updatePaymentAvatar(playerIGN);
+  } else {
+    updatePaymentAvatar('Steve');
+  }
+
+  // Close cart drawer & open payment window
+  const cartOverlay = document.getElementById('cartOverlay');
+  cartOverlay.classList.remove('open');
+
+  const payOverlay = document.getElementById('paymentModalOverlay');
+  payOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePaymentWindow() {
+  const payOverlay = document.getElementById('paymentModalOverlay');
+  payOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closePayModalOnOverlay(e) {
+  if (e.target && e.target.id === 'paymentModalOverlay') {
+    closePaymentWindow();
+  }
+}
+
+function selectEdition(ed) {
+  selectedEdition = ed;
+  document.querySelectorAll('.edition-tab').forEach(t => t.classList.remove('active'));
+  const activeTab = document.querySelector(`.edition-tab[data-edition="${ed}"]`);
+  if (activeTab) activeTab.classList.add('active');
+
+  const ignInput = document.getElementById('payIgnInput');
+  if (ignInput) {
+    if (ed === 'bedrock') {
+      ignInput.placeholder = 'e.g. .Username or Gamertag';
+    } else {
+      ignInput.placeholder = 'e.g. Syuka1x';
     }
+  }
 
-    // --- 5. CART LOGIC ---
-    function addToCart(productId, btnEl) {
-      const prod = ALL_PRODUCTS.find(p => p.id === productId);
-      if (!prod) return;
+  updateInGameSyncDisplay();
+}
 
-      const existing = cart.find(item => item.id === productId);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({
-          id: prod.id,
-          name: prod.name,
-          price: prod.priceNum,
-          priceDisplay: prod.priceDisplay,
-          img: prod.img,
-          qty: 1
-        });
-      }
+function updatePaymentAvatar(ign) {
+  const cleanIGN = (ign || '').trim();
+  const avatarImg = document.getElementById('payAvatarPreview');
+  if (!cleanIGN) {
+    if (avatarImg) avatarImg.src = 'https://mc-heads.net/avatar/Steve/24';
+    return;
+  }
+  const formattedIGN = cleanIGN.startsWith('.') ? cleanIGN.slice(1) : cleanIGN;
+  if (avatarImg) avatarImg.src = `https://mc-heads.net/avatar/${formattedIGN}/24`;
+  updateInGameSyncDisplay();
+}
 
-      saveCart();
-      updateCartUI();
+function updateInGameSyncDisplay() {
+  const ign = (document.getElementById('payIgnInput')?.value || playerIGN || 'Player').trim();
+  const edText = selectedEdition === 'bedrock' ? 'Bedrock Edition' : 'Java Edition';
+  const syncEl = document.getElementById('payInGameSyncDesc');
+  if (syncEl) {
+    syncEl.innerHTML = `Items will be auto-delivered to <strong>${ign}</strong> (${edText}) on <strong>play.lycheemc.fun</strong> upon verification.`;
+  }
+}
 
-      if (btnEl) {
-        const origHTML = btnEl.innerHTML;
-        btnEl.classList.add('added');
-        btnEl.innerHTML = '<span>Added!</span> ✔';
-        setTimeout(() => {
-          btnEl.classList.remove('added');
-          btnEl.innerHTML = origHTML;
-        }, 1200);
-      }
+function switchPayMethod(method) {
+  selectedPaymentMethod = method;
+  document.querySelectorAll('.method-pill').forEach(p => p.classList.remove('active'));
+  const activePill = document.querySelector(`.method-pill[data-method="${method}"]`);
+  if (activePill) activePill.classList.add('active');
 
-      showToast(`Added <strong>${prod.name}</strong> to your cart!`);
+  const upiPane = document.getElementById('upiPayPane');
+  const cardPane = document.getElementById('cardPayPane');
+
+  if (method === 'upi') {
+    if (upiPane) upiPane.style.display = 'block';
+    if (cardPane) cardPane.style.display = 'none';
+  } else {
+    if (upiPane) upiPane.style.display = 'none';
+    if (cardPane) cardPane.style.display = 'block';
+  }
+}
+
+function appendUpiHandle(handle) {
+  const inp = document.getElementById('payUpiVpa');
+  if (!inp) return;
+  const current = inp.value.split('@')[0];
+  inp.value = (current || 'username') + handle;
+}
+
+function formatCardNumber(input) {
+  let val = input.value.replace(/\D/g, '').substring(0, 16);
+  val = val.replace(/(\d{4})(?=\d)/g, '$1 ');
+  input.value = val;
+}
+
+// --- 7. PROCESS PAYMENT SUBMISSION ---
+function processPayment() {
+  const ign = (document.getElementById('payIgnInput')?.value || '').trim();
+  if (!ign) {
+    showToast('Please enter your in-game Minecraft Username!');
+    document.getElementById('payIgnInput')?.focus();
+    return;
+  }
+
+  // Validate UTR or Card
+  if (selectedPaymentMethod === 'upi') {
+    const utr = (document.getElementById('payUpiUtr')?.value || '').trim();
+    if (utr.length < 12) {
+      showToast('Please enter a valid 12-digit UPI UTR number from your payment app receipt!');
+      document.getElementById('payUpiUtr')?.focus();
+      return;
     }
+  }
 
-    function updateCartQty(productId, delta) {
-      const item = cart.find(i => i.id === productId);
-      if (!item) return;
+  // Save IGN globally
+  playerIGN = ign;
+  localStorage.setItem('lycheemc_ign', ign);
+  updatePlayerUI();
 
-      item.qty += delta;
-      if (item.qty <= 0) {
-        cart = cart.filter(i => i.id !== productId);
-      }
-      saveCart();
-      updateCartUI();
-    }
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const itemsSummary = cart.map(i => `${i.name} (x${i.qty})`).join(', ');
 
-    function removeCartItem(productId) {
-      cart = cart.filter(i => i.id !== productId);
-      saveCart();
-      updateCartUI();
-    }
+  // Show processing state on button
+  const btn = document.getElementById('btnSubmitPayment');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = `<span>Verifying Order with Server...</span> ⏳`;
+  btn.disabled = true;
 
-    function saveCart() {
-      try {
-        localStorage.setItem('lychee_cart', JSON.stringify(cart));
-      } catch(e) {}
-    }
-
-    function updateCartUI() {
-      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-      const badge = document.getElementById('cartBadgeCount');
-      if (badge) badge.textContent = totalCount;
-
-      const listEl = document.getElementById('cartItemsList');
-      const totalEl = document.getElementById('cartTotalVal');
-
-      let totalPrice = 0;
-      if (cart.length === 0) {
-        listEl.innerHTML = `
-          <div class="cart-empty-state">
-            <div class="cart-empty-icon">🛒</div>
-            <div style="font-size: 16px; font-weight: 700; color: #fff;">Your cart is empty</div>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Add keys, shards, or ranks to get started.</p>
-          </div>
-        `;
-      } else {
-        listEl.innerHTML = cart.map(item => {
-          const itemTotal = item.price * item.qty;
-          totalPrice += itemTotal;
-          return `
-            <div class="cart-item">
-              <img src="${item.img}" alt="${item.name}" class="cart-item-img">
-              <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">₹${item.price} each</div>
-                <div class="cart-item-actions">
-                  <button class="qty-btn" onclick="updateCartQty('${item.id}', -1)">-</button>
-                  <span class="cart-item-qty">${item.qty}</span>
-                  <button class="qty-btn" onclick="updateCartQty('${item.id}', 1)">+</button>
-                </div>
-              </div>
-              <div style="text-align: right;">
-                <div style="font-family: var(--font-mono); font-weight: 800; color: #fff;">₹${itemTotal}</div>
-                <button class="btn-remove-item" onclick="removeCartItem('${item.id}')" title="Remove">&times;</button>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      if (totalEl) totalEl.textContent = '₹' + totalPrice;
-    }
-
-    function toggleCart() {
-      const overlay = document.getElementById('cartOverlay');
-      overlay.classList.toggle('open');
-    }
-
-    function closeCartOnOverlay(e) {
-      if (e.target.id === 'cartOverlay') {
-        toggleCart();
-      }
-    }
-
-    // --- 6. DEDICATED PAYMENT WINDOW LOGIC ---
-    function openPaymentWindow() {
-      if (cart.length === 0) {
-        showToast('Your cart is empty! Please add an item first.');
-        return;
-      }
-
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      document.getElementById('payModalTotalAmount').textContent = '₹' + total;
-      const upiDisplay = document.getElementById('upiDisplayAmount');
-      if (upiDisplay) upiDisplay.textContent = '₹' + total;
-      document.getElementById('btnSubmitPayment').innerHTML = `<span>Pay &amp; Connect to In-Game (₹${total})</span> ➔`;
-
-      // Clear previous inputs
-      const utrEl = document.getElementById('payUpiUtr');
-      if (utrEl) utrEl.value = '';
-
-      // Pre-fill IGN if already set
-      const ignInput = document.getElementById('payIgnInput');
-      if (playerIGN) {
-        ignInput.value = playerIGN;
-        updatePaymentAvatar(playerIGN);
-      } else {
-        updatePaymentAvatar('Steve');
-      }
-
-      // Close cart drawer & open payment window
-      const cartOverlay = document.getElementById('cartOverlay');
-      cartOverlay.classList.remove('open');
-
-      const payOverlay = document.getElementById('paymentModalOverlay');
-      payOverlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePaymentWindow() {
-      const payOverlay = document.getElementById('paymentModalOverlay');
-      payOverlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function closePayModalOnOverlay(e) {
-      if (e.target.id === 'paymentModalOverlay') {
-        closePaymentWindow();
-      }
-    }
-
-    // Switch between Java Edition and Bedrock Edition
-    function selectEdition(ed) {
-      selectedEdition = ed;
-      const btnJava = document.getElementById('btnJava');
-      const btnBedrock = document.getElementById('btnBedrock');
-      if (ed === 'java') {
-        btnJava.classList.add('active');
-        btnBedrock.classList.remove('active');
-      } else {
-        btnBedrock.classList.add('active');
-        btnJava.classList.remove('active');
-      }
-      updateInGameSyncDisplay();
-    }
-
-    function updatePaymentAvatar(ign) {
-      const clean = ign.trim();
-      const avatarEl = document.getElementById('payAvatarPreview');
-      const target = clean || 'Steve';
-      avatarEl.src = `https://mc-heads.net/avatar/${encodeURIComponent(target)}/24`;
-      updateInGameSyncDisplay();
-    }
-
-    function updateInGameSyncDisplay() {
-      const ign = document.getElementById('payIgnInput').value.trim() || playerIGN || 'Guest';
-      const edLabel = selectedEdition === 'java' ? 'Java Edition' : 'Bedrock / PE';
-      document.getElementById('connectedPlayerDisplay').textContent = `${ign} (${edLabel})`;
-    }
-
-    // Switch between UPI and Card details
-    function switchPayMethod(method) {
-      currentPayMethod = method;
-      const tabUpi = document.getElementById('tabUpiBtn');
-      const tabCard = document.getElementById('tabCardBtn');
-      const upiContent = document.getElementById('upiFormContent');
-      const cardContent = document.getElementById('cardFormContent');
-
-      if (method === 'upi') {
-        tabUpi.classList.add('active');
-        tabCard.classList.remove('active');
-        upiContent.style.display = 'flex';
-        cardContent.style.display = 'none';
-      } else {
-        tabCard.classList.add('active');
-        tabUpi.classList.remove('active');
-        upiContent.style.display = 'none';
-        cardContent.style.display = 'flex';
-      }
-    }
-
-    function appendUpiHandle(handle) {
-      const input = document.getElementById('payUpiId');
-      const val = input.value.split('@')[0].trim() || 'player';
-      input.value = val + handle;
-      input.focus();
-    }
-
-    function formatCardNumber(input) {
-      let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-      let matches = v.match(/\d{4,16}/g);
-      let match = matches && matches[0] || '';
-      let parts = [];
-      for (let i = 0, len = match.length; i < len; i += 4) {
-        parts.push(match.substring(i, i + 4));
-      }
-      if (parts.length) {
-        input.value = parts.join(' ');
-      } else {
-        input.value = v;
-      }
-    }
-
-    // Process Payment & Connect to In-game
-    function processPayment() {
-      const ign = document.getElementById('payIgnInput').value.trim();
-      const email = document.getElementById('payGmailInput').value.trim();
-
-      if (!ign) {
-        alert('Please enter your Minecraft in-game username (IGN) to connect your account.');
-        document.getElementById('payIgnInput').focus();
-        return;
-      }
-
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid Gmail address to receive your payment confirmation and claim receipt.');
-        document.getElementById('payGmailInput').focus();
-        return;
-      }
-
-      let upiUtr = '';
-      let upiIdVal = '';
-      if (currentPayMethod === 'upi') {
-        const utrEl = document.getElementById('payUpiUtr');
-        const upiEl = document.getElementById('payUpiId');
-        upiUtr = utrEl ? utrEl.value.trim() : '';
-        upiIdVal = upiEl ? upiEl.value.trim() : '';
-
-        if (!upiUtr && !upiIdVal) {
-          alert('Please enter your 12-digit UPI UTR / Transaction Reference number from your payment receipt after scanning the QR code.');
-          if (utrEl) utrEl.focus();
-          return;
-        }
-
-        if (upiUtr && upiUtr.length < 6) {
-          alert('Please enter a valid UPI Reference / UTR Number (usually 12 digits from your Google Pay, PhonePe, Paytm or FamPay receipt).');
-          if (utrEl) utrEl.focus();
-          return;
-        }
-      } else {
-        const cardNum = document.getElementById('cardNumber').value.trim();
-        if (!cardNum || cardNum.length < 12) {
-          alert('Please enter a valid Card Number.');
-          document.getElementById('cardNumber').focus();
-          return;
-        }
-      }
-
-      // Save player IGN
-      playerIGN = ign;
-      localStorage.setItem('lychee_ign', playerIGN);
-      updatePlayerUI();
-
-      // Show processing state
-      const btn = document.getElementById('btnSubmitPayment');
-      const origText = btn.innerHTML;
-      btn.classList.add('loading');
-      btn.innerHTML = `<span>Connecting to LycheeMC Server via RCON...</span> ⏳`;
-
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const txnId = 'LM-' + (currentPayMethod === 'upi' ? 'UPI' : 'CARD') + '-' + Math.floor(100000 + Math.random() * 900000);
-      const edLabel = selectedEdition === 'java' ? 'Java Edition' : 'Bedrock Edition';
-
-      const orderPayload = {
-        ign: playerIGN,
-        email,
-        items: [...cart],
-        total,
-        txnId,
-        utr: upiUtr || 'N/A',
-        upiId: upiIdVal || 'N/A',
-        method: currentPayMethod === 'upi' ? 'UPI / QR' : 'Credit / Debit Card',
-        platform: edLabel,
-        timestamp: new Date().toISOString()
-      };
-
-      // Store in browser order history
-      try {
-        const history = JSON.parse(localStorage.getItem('lychee_orders_history') || '[]');
-        history.unshift(orderPayload);
-        localStorage.setItem('lychee_orders_history', JSON.stringify(history.slice(0, 20)));
-      } catch(e) {}
-
-      // Optional: Send to Discord Channel Webhook directly (ideal for GitHub Pages)
-      if (typeof DISCORD_WEBHOOK_URL !== 'undefined' && DISCORD_WEBHOOK_URL) {
-        try {
-          fetch(DISCORD_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              username: 'LycheeMC Store',
-              avatar_url: 'https://mc-heads.net/avatar/' + encodeURIComponent(playerIGN) + '/64',
-              embeds: [{
-                title: '🛒 New Store Purchase Verified!',
-                color: 0x10b981,
-                thumbnail: { url: 'https://mc-heads.net/avatar/' + encodeURIComponent(playerIGN) + '/64' },
-                fields: [
-                  { name: '👤 Player IGN', value: '`' + playerIGN + '` (' + edLabel + ')', inline: true },
-                  { name: '💰 Total Paid', value: '₹' + total, inline: true },
-                  { name: '💳 Method', value: currentPayMethod === 'upi' ? 'UPI / QR' : 'Card', inline: true },
-                  { name: '🔢 UPI UTR / Ref', value: '`' + (upiUtr || 'N/A') + '`', inline: true },
-                  { name: '📧 Gmail', value: email, inline: true },
-                  { name: '🧾 Transaction ID', value: '`' + txnId + '`', inline: true },
-                  { name: '📦 Items', value: cart.map(i => '• **' + i.name + '** ×' + i.qty).join('\n') },
-                  { name: '⚡ Quick In-Game Delivery Command', value: cart.map(i => '`!deliver ' + playerIGN + ' ' + (i.id.replace('key-', '').replace('rank-', '').replace('shards-', '')) + ' ' + i.qty + '`').join('\n') }
-                ],
-                footer: { text: 'LycheeMC GitHub Pages Store' },
-                timestamp: new Date().toISOString()
-              }]
-            })
-          }).catch(() => {});
-        } catch(e) {}
-      }
-
-      // Send order to Discord Bot RCON Dispatcher (Local / Discloud)
-      let botDelivered = false;
-      const deliverPromise = fetch('http://localhost:4000/api/store-order', {
+  // Optional: Send Discord Webhook notification
+  if (DISCORD_WEBHOOK_URL) {
+    try {
+      fetch(DISCORD_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderPayload)
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.success) {
-          botDelivered = true;
-          console.log('[Store Webhook]: In-game commands dispatched to LycheeMC via bot RCON!', data);
-        }
-      })
-      .catch(err => {
-        console.log('[Store Webhook Note]: Bot server not reached locally; order verified and queued in client receipt.');
-      });
+        body: JSON.stringify({
+          embeds: [{
+            title: '💎 New Store Order Submitted!',
+            color: 0xf43f5e,
+            fields: [
+              { name: '👤 Player IGN', value: `\`${ign}\` (${selectedEdition.toUpperCase()})`, inline: true },
+              { name: '💰 Total Amount', value: `₹${total} (${formatPrice(total)})`, inline: true },
+              { name: '💳 Method', value: selectedPaymentMethod.toUpperCase(), inline: true },
+              { name: '📦 Items', value: itemsSummary },
+              { name: '🔖 UTR / Ref', value: document.getElementById('payUpiUtr')?.value || 'Card / Online' }
+            ],
+            footer: { text: 'LycheeMC Automated Store • play.lycheemc.fun' },
+            timestamp: new Date().toISOString()
+          }]
+        })
+      }).catch(() => {});
+    } catch (e) {}
+  }
 
-      setTimeout(async () => {
-        try { await Promise.race([deliverPromise, new Promise(r => setTimeout(r, 1400))]); } catch(e) {}
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.disabled = false;
 
-        btn.classList.remove('loading');
-        btn.innerHTML = origText;
+    // Close payment window
+    closePaymentWindow();
 
-        // Fill Success Modal details
-        document.getElementById('successPlayerIgn').textContent = playerIGN;
-        document.getElementById('successPlatformServer').textContent = `${edLabel} • play.lycheemc.fun`;
-        document.getElementById('successPlayerAvatar').src = `https://mc-heads.net/avatar/${encodeURIComponent(playerIGN)}/48`;
-        document.getElementById('successGmail').textContent = email;
-        document.getElementById('successMethod').textContent = currentPayMethod === 'upi' ? 'UPI / FamPay QR' : 'Credit / Debit Card';
-        document.getElementById('successTxnId').textContent = txnId;
-        document.getElementById('successTotal').textContent = '₹' + total;
+    // Open Success Modal
+    openSuccessModal(ign, total, itemsSummary);
 
-        const utrRow = document.getElementById('receiptUtrRow');
-        const utrVal = document.getElementById('successUtr');
-        if (utrRow && utrVal) {
-          if (currentPayMethod === 'upi' && upiUtr) {
-            utrRow.style.display = 'flex';
-            utrVal.textContent = upiUtr;
-          } else {
-            utrRow.style.display = 'none';
-          }
-        }
+    // Clear cart
+    cart = [];
+    saveCart();
+    updateCartUI();
+  }, 1200);
+}
 
-        const deliveryStatusEl = document.getElementById('successDeliveryStatus');
-        if (deliveryStatusEl) {
-          if (botDelivered) {
-            deliveryStatusEl.textContent = '⚡ Delivered via RCON to play.lycheemc.fun';
-            deliveryStatusEl.style.color = '#10b981';
-          } else {
-            deliveryStatusEl.textContent = '⚡ Payment Verified • Queued for In-Game Claim';
-            deliveryStatusEl.style.color = 'var(--cyan-bright)';
-          }
-        }
+function openSuccessModal(ign, total, itemsSummary) {
+  const modal = document.getElementById('successModal');
+  const playerSpan = document.getElementById('successPlayerIGN');
+  const avatarImg = document.getElementById('successPlayerAvatar');
+  const itemsSpan = document.getElementById('successItemsSummary');
 
-        // Clear Cart
-        cart = [];
-        saveCart();
-        updateCartUI();
+  if (playerSpan) playerSpan.textContent = ign;
+  if (itemsSpan) itemsSpan.textContent = itemsSummary;
+  if (avatarImg) {
+    const formattedIGN = ign.startsWith('.') ? ign.slice(1) : ign;
+    avatarImg.src = `https://mc-heads.net/avatar/${formattedIGN}/48`;
+  }
 
-        // Close Payment Window & Open Success Modal
-        closePaymentWindow();
-        document.getElementById('successModal').classList.add('open');
-      }, 1500);
-    }
+  if (modal) {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
 
-    function closeSuccessModal() {
-      document.getElementById('successModal').classList.remove('open');
-    }
+function closeSuccessModal() {
+  const modal = document.getElementById('successModal');
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
 
-    // --- 7. PLAYER PROFILE & IP COPY ---
-    function promptIGN() {
-      const name = prompt('Enter your Minecraft In-Game Name (IGN):', playerIGN || '');
-      if (name !== null && name.trim() !== '') {
-        playerIGN = name.trim();
-        localStorage.setItem('lychee_ign', playerIGN);
-        updatePlayerUI();
-        showToast(`Profile updated to <strong>${playerIGN}</strong>!`);
-      }
-    }
+// --- 8. RETURN & REFUND POLICY MODAL CONTROLLER ---
+function openPolicyModal(type) {
+  const modal = document.getElementById('refundPolicyModal');
+  if (modal) {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
 
-    function updatePlayerUI() {
-      const ign = playerIGN || 'Guest';
-      const navIGN = document.getElementById('navIGN');
-      const navAvatar = document.getElementById('navAvatar');
+function closePolicyModal() {
+  const modal = document.getElementById('refundPolicyModal');
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
 
-      if (navIGN) navIGN.textContent = ign;
-      const avatarUrl = playerIGN 
-        ? `https://mc-heads.net/avatar/${encodeURIComponent(playerIGN)}/26`
-        : 'https://mc-heads.net/avatar/Steve/26';
+function closePolicyOnOverlay(e) {
+  if (e.target && e.target.id === 'refundPolicyModal') {
+    closePolicyModal();
+  }
+}
 
-      if (navAvatar) navAvatar.src = avatarUrl;
-    }
+// --- 9. PLAYER IGN & UI PROFILE LOGIC ---
+let playerIGN = localStorage.getItem('lycheemc_ign') || '';
 
-    function copyServerIP() {
-      const ip = 'play.lycheemc.fun';
-      navigator.clipboard.writeText(ip).then(() => {
-        const badge = document.getElementById('ipCopyBadge');
-        if (badge) {
-          badge.textContent = 'Copied!';
-          badge.style.background = '#10b981';
-          badge.style.color = '#fff';
-          setTimeout(() => {
-            badge.textContent = 'Copy';
-            badge.style.background = '';
-            badge.style.color = '';
-          }, 2000);
-        }
-        showToast('Server IP <strong>play.lycheemc.fun</strong> copied to clipboard!');
-      }).catch(() => {
-        prompt('Copy server address:', ip);
-      });
-    }
-
-    function showToast(html) {
-      const box = document.getElementById('toastBox');
-      if (!box) return;
-
-      const toast = document.createElement('div');
-      toast.className = 'toast-msg';
-      toast.innerHTML = `<span>✨</span> <div>${html}</div>`;
-      box.appendChild(toast);
-
-      setTimeout(() => {
-        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(10px)';
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
-
-    window.addEventListener('scroll', () => {
-      const hdr = document.getElementById('siteHeader');
-      if (window.scrollY > 20) {
-        hdr.classList.add('scrolled');
-      } else {
-        hdr.classList.remove('scrolled');
-      }
-    });
-
-    // Initialize
-    window.addEventListener('DOMContentLoaded', () => {
+function promptIGN() {
+  const current = playerIGN || '';
+  const newIGN = prompt('Enter your in-game Minecraft Username (IGN):', current);
+  if (newIGN !== null) {
+    const trimmed = newIGN.trim();
+    if (trimmed) {
+      playerIGN = trimmed;
+      localStorage.setItem('lycheemc_ign', playerIGN);
       updatePlayerUI();
-      updateCartUI();
-    });
+      showToast(`Logged in as ${playerIGN}!`);
+    }
+  }
+}
+
+function updatePlayerUI() {
+  const ignEl = document.getElementById('navIGN');
+  const avatarEl = document.getElementById('navAvatar');
+  if (!playerIGN) {
+    if (ignEl) ignEl.textContent = 'Guest';
+    if (avatarEl) avatarEl.src = 'https://mc-heads.net/avatar/Steve/26';
+    return;
+  }
+
+  if (ignEl) ignEl.textContent = playerIGN;
+  const clean = playerIGN.startsWith('.') ? playerIGN.slice(1) : playerIGN;
+  if (avatarEl) avatarEl.src = `https://mc-heads.net/avatar/${clean}/26`;
+}
+
+// --- 10. COPY SERVER IP CLIPBOARD ---
+function copyServerIP() {
+  const ip = 'play.lycheemc.fun';
+  navigator.clipboard.writeText(ip).then(() => {
+    const badge = document.getElementById('ipCopyBadge');
+    if (badge) {
+      badge.textContent = 'Copied!';
+      badge.classList.add('copied');
+      setTimeout(() => {
+        badge.textContent = 'Copy';
+        badge.classList.remove('copied');
+      }, 2000);
+    }
+    showToast('Copied server IP: play.lycheemc.fun to clipboard!');
+  }).catch(() => {
+    showToast('Server IP: play.lycheemc.fun (Port: 25567)');
+  });
+}
+
+// --- 11. TOAST NOTIFICATION UTILITY ---
+function showToast(msg) {
+  let toast = document.getElementById('toastNotice');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toastNotice';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111420;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      font-family: var(--font-display, sans-serif);
+      font-size: 13.5px;
+      font-weight: 600;
+      z-index: 100000;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    `;
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = `<span>⚡</span> ${msg}`;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(12px)';
+  }, 2600);
+}
+
+// --- 12. INITIALIZATION ON DOM READY ---
+document.addEventListener('DOMContentLoaded', () => {
+  updatePlayerUI();
+  updateCartUI();
+  updateCurrencyUI();
+  refreshPricesOnPage();
+
+  // Close dropdown on outside click
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('currencyDropdownWrap');
+    if (wrap && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+    }
+  });
+
+  // Ensure portal preview images are properly loaded from base64 if available
+  if (window.LM_IMGS) {
+    const rImg = document.getElementById('portalRanksImg');
+    const kImg = document.getElementById('portalKeysImg');
+    const sImg = document.getElementById('portalShardsImg');
+    if (rImg && window.LM_IMGS['ranks/lychee-plus.png']) rImg.src = window.LM_IMGS['ranks/lychee-plus.png'];
+    if (kImg && window.LM_IMGS['keys/matrix-key.png']) kImg.src = window.LM_IMGS['keys/matrix-key.png'];
+    if (sImg && window.LM_IMGS['shards/10k-shards.png']) sImg.src = window.LM_IMGS['shards/10k-shards.png'];
+  }
+});
